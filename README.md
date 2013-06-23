@@ -1,7 +1,16 @@
 Orion
 =====
 
-Orion is a java 2D Mario style game which will hopefully turn into a platformer game engine with easy API. The main purpose of the project is to learn and practise relatively clean java code and experiment with a wide range of API provided by Java SE libraries
+Orion is a java 2D platformer game engine with easy API. The main purpose of the project is to learn and practise relatively clean java code and experiment with a wide range of API provided by Java SE libraries.
+Jelly is a Mario style game based on the Orion engine. This project is a concurrent development of both entities
+
+Source Code
+===========
+
+As a foundation of the main game loop I am using a modified version of Mike Smith's suggested MVC approach.
+(The original MVC implementation can be found here: http://www.it.brighton.ac.uk/staff/mas/mas/courses/ci101.java/home.html under "mini-projects")
+When contributing to the code use javadoc comments and annotations, such as @author, @version, etc.
+If a piece of code within a class doesn't belong to the author of the class, please mention the source(web-site or author's name) using the @author annotation where necessary
 
 Compile
 =======
