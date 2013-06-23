@@ -16,6 +16,11 @@ public class GameModel extends Observable
 
 	private ArrayList<Renderable> renderedObjects = new ArrayList<Renderable>();	//holds all objects that need to be displayed
 	
+	/**
+	 * Constructs an instance of GameModel and runs the thread associated
+	 * with the dynamic part of this model
+	 * @param controller - the keyboard input used by the view observing this model
+	 */
 	public GameModel(KeyInput controller) 
 	{
 		Thread currentGameThread = new Thread(new Game(this, controller));
