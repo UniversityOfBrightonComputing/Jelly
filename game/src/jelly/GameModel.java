@@ -67,8 +67,9 @@ public class GameModel extends Observable
 	
 	/**
 	 * Returns a copy (not the same reference) of rendered objects to avoid concurrentModificationException
-	 * Furthermore, any accidental changes will not affect the original objects which are only accessible
-	 * within the model
+	 * It won't be necessary but you are allowed to modify the list, but not the objects within the list
+	 * because although the list reference is different, the objects' references inside the list
+	 * refer to the original objects
 	 * @return - list of all objects that need to be rendered now
 	 */
 	public ArrayList<Renderable> getRenderedObjects() {
