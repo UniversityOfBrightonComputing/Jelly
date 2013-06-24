@@ -16,6 +16,6 @@ public class Global
 	public static final int SCORE_BONUS = SCORE_COIN * 10;
 	
 	public static final String APP_AUTHOR = "Almas";
-	public static final String APP_VERSION = "0.56";
+	public static final String APP_VERSION = "0.57";
 	public static final String APP_TITLE = "Jelly Project " + APP_VERSION + " | Author: " + APP_AUTHOR;
 }
