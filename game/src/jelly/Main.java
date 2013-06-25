@@ -5,6 +5,7 @@ package jelly;
  * Exists just to initialise game's core classes
  * and to start the game
  * @author Almas
+ * @version 1.0
  */
 public class Main
 {
@@ -12,8 +13,8 @@ public class Main
 	{
 		KeyInput keyboard = new KeyInput();
 		
-		Model model = new Model(keyboard);
-		View view = new View();
+		GameModel model = new GameModel(keyboard);
+		GameView view = new GameView();
 		
 		view.addKeyListener(keyboard);
 		
