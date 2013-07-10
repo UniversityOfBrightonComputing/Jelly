@@ -3,8 +3,6 @@ package uk.ac.brighton.ab607.jelly.graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.io.Out;
-
 public abstract class GraphicObject
 {
 	protected int x, y;

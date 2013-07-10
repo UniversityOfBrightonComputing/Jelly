@@ -17,7 +17,7 @@ import static uk.ac.brighton.ab607.jelly.global.Global.PATH_RESOURCES;
  */
 public class GameResources
 {	
-	public static final BufferedImage IMG_NULL;	//a 1x1 transparent null image
+	public static final BufferedImage IMG_NULL;	//a 1x1 transparent image
 	
 	public static final BufferedImage IMG_PLAYER;
 	
@@ -33,15 +33,15 @@ public class GameResources
 	public static final BufferedImage[] IMG_ANIMATION_COIN = new BufferedImage[1];
 	public static final BufferedImage[] IMG_ANIMATION_ENEMY = new BufferedImage[1];
 	
+	public static final BufferedImage IMG_HUD_LIVES;
+	
 	/**
 	 * Loads all necessary in-game resources
 	 * such as images and sounds
 	 */
 	static
 	{
-		/**
-		 * LOADING IMAGES
-		 */
+	    /*LOADING IMAGES*/
 		IMG_NULL = getImg("null.png");
 		IMG_PLAYER = getImg("player.png");
 		IMG_BACKGROUND = getImg("bg.jpg");
@@ -55,6 +55,8 @@ public class GameResources
 		
 		IMG_ANIMATION_COIN[0] = IMG_COIN;
 		IMG_ANIMATION_ENEMY[0] = getImg("enemy.png");
+		
+		IMG_HUD_LIVES = getImg("hud/lives.png");
 	}
 	
 	/**
@@ -62,9 +64,9 @@ public class GameResources
 	 * @param fileName - full or relative pathName + fileName
 	 * @return - an image if loaded, exits program if can't
 	 */
-	private static BufferedImage getImg(String fileName)
+	private static BufferedImage getImg(String file)
 	{
-		fileName = PATH_RESOURCES + "images/" + fileName;
+		String fileName = PATH_RESOURCES + "images/" + file;
 		
 		try {
 			return ImageIO.read(new File(fileName));
@@ -72,7 +74,8 @@ public class GameResources
 		catch (Exception e)
 		{
 			try {
-				return ImageIO.read(GameResources.class.getResource(fileName));
+			    fileName = "game/res/images/" + file;
+				return ImageIO.read(GameResources.class.getClassLoader().getResource(fileName));
 			}
 			catch (Exception ex)
 			{
@@ -104,5 +107,4 @@ public class GameResources
 		}
 		return null;
 	}
-
 }

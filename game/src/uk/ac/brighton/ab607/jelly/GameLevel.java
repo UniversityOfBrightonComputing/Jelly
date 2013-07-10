@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import static uk.ac.brighton.ab607.jelly.global.Global.*;
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.HudObject;
+import uk.ac.brighton.ab607.jelly.graphics.hud.HudObject;
 import uk.ac.brighton.ab607.jelly.io.LevelReader;
 import static uk.ac.brighton.ab607.jelly.GameResources.*;
 
@@ -46,7 +46,7 @@ public class GameLevel
 	private void populate()
 	{
 		//create player
-		players.add(new GameObject(0, H - 2*SPRITE_SIZE, origin, IMG_ANIMATION_PLAYER));
+		players.add(new Player(0, H - 2*SPRITE_SIZE, origin, IMG_ANIMATION_PLAYER));
 		
 		for (int i = 0; i < 3; i++)
 		{
@@ -81,13 +81,6 @@ public class GameLevel
 		}
 	}
 	
-	public GraphicObject[] getGraphicObject() {
-	    GraphicObject[] staticObjects = new GraphicObject[1];
-	    
-	    staticObjects[0] = new HudObject(0, 0, IMG_BACKGROUND);
-	    return staticObjects;
-	}
-	
 	public GameObject[] getGameObject(LevelObject type)
 	{
 		ArrayList<GameObject> list = new ArrayList<GameObject>();
@@ -118,6 +111,10 @@ public class GameLevel
 		GameObject[] tmp = new GameObject[list.size()];
 		list.toArray(tmp);
 		return tmp;
+	}
+	
+	public Player getPlayer() {
+	    return (Player) players.get(0);
 	}
 	
 	public Point getOrigin() {

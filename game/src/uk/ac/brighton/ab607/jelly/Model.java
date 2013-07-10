@@ -1,12 +1,10 @@
 package uk.ac.brighton.ab607.jelly;
 
-import static uk.ac.brighton.ab607.jelly.GameResources.IMG_BACKGROUND;
-
 import java.util.ArrayList;
 import java.util.Observable;
 
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.HudObject;
+import uk.ac.brighton.ab607.jelly.graphics.hud.HUD;
 import uk.ac.brighton.ab607.jelly.io.KeyInput;
 import uk.ac.brighton.ab607.jelly.GameLevel.LevelObject;
 
@@ -40,8 +38,10 @@ public class Model extends Observable
 		Thread currentGameThread = new Thread(new Game(this, controller));
 		currentGameThread.start();
 		
-		/*Add all static graphic objects here, e.g. BG, HUD, text*/
-		staticRenderedObjects.add(new HudObject(0, 0, IMG_BACKGROUND));
+		HUD hud = new HUD();
+		this.addObserver(hud);
+
+		staticRenderedObjects.addAll(hud.getObjects());
 	}
 	
 	/**

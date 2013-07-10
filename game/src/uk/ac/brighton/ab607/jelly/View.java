@@ -41,9 +41,8 @@ public class View extends JFrame implements Observer {
 	 * Called from the model when its state has changed
 	 */
 	@Override
-	public void update(Observable aModel, Object arg) {
-		Model model = (Model) aModel;
-		renderedObjects = model.getRenderedObjects();
+	public void update(Observable model, Object arg) {
+		renderedObjects = ((Model) model).getRenderedObjects();
 		repaint();
 	}
 	

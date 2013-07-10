@@ -21,7 +21,7 @@ public class Game implements Runnable
 	private KeyInput controller;
 	
 	private GameLevel level;
-	private GameObject player;
+	private Player player;
 	private GameObject[] platforms;
 	
 	private Point origin;
@@ -49,7 +49,7 @@ public class Game implements Runnable
 			level = model.getLevel();
 			origin = level.getOrigin();
 			
-			player = level.getGameObject(LevelObject.PLAYER)[0];
+			player = level.getPlayer();
 			platforms = level.getGameObject(LevelObject.PLATFORM);
 			
 			GameObject[] coins = level.getGameObject(LevelObject.COIN);
@@ -67,9 +67,17 @@ public class Game implements Runnable
 				if (player.isColliding(portal))
 					levelRunning = false;
 				
+				boolean hit = false;
+				
 				for (GameObject coin : coins)
-					if (player.isColliding(coin))
-						coin.setDead();
+					if (player.isColliding(coin) && coin.isAlive()) {
+					    coin.setDead();
+					    hit = true;
+					}
+				
+				
+				if (hit)
+				    player.setLives(player.getLives()+1);
 				
 				handleGameEvents();
 				model.modelChanged();

@@ -29,7 +29,7 @@ public class LevelReader
 	public LevelReader(int level)
 	{
 		FILE = Global.PATH_RESOURCES + "levels/level" + level + ".txt";
-		in = getClass().getResourceAsStream(FILE);
+		in = getClass().getClassLoader().getResourceAsStream("game/res/levels/level" + level + ".txt");
 		read();
 	}
 	
@@ -79,7 +79,7 @@ public class LevelReader
 			
 			bf.close();
 		}
-		catch(Exception e) {System.out.println("#Error: couldn't read from file: " + FILE);}
+		catch(Exception e) {System.out.println("#Error: couldn't read from file: " + in.toString());}
 	}
 	
 	/**
