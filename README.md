@@ -2,6 +2,10 @@ Orion
 =====
 
 Orion is a java 2D platformer game engine with easy API. The main purpose of the project is to learn and practise relatively clean java code and experiment with a wide range of API provided by Java SE libraries.
+
+Jelly
+=====
+
 Jelly is a Mario style game based on the Orion engine. This project is a concurrent development of both entities
 
 Source Code
