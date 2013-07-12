@@ -6,6 +6,13 @@ import static uk.ac.brighton.ab607.jelly.global.Global.SPRITE_SIZE;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+/**
+ * The player with all his unique abilities
+ * and fields. At a later stage other game objects
+ * might get some of these abilities
+ * @author Almas
+ * @version 0.1
+ */
 public class Player extends GameObject {
     private int score = 0, lives = 3;
 
