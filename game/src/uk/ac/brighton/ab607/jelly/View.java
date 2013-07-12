@@ -33,8 +33,10 @@ public class View extends JFrame implements Observer {
 	 * @param g - Graphics context to use
 	 */
 	public void renderPicture(Graphics2D g) {		
-		for (GraphicObject obj : renderedObjects)
+		for (GraphicObject obj : renderedObjects) {
 		    g.drawImage(obj.getImage(), obj.getRenderX(), obj.getRenderY(), this);
+		    //g.drawRect(obj.getRenderX(), obj.getRenderY(), obj.getImage().getWidth(), obj.getImage().getHeight());    //DEBUG
+		}
 	}
 	
 	/**

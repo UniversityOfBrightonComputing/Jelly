@@ -27,6 +27,7 @@ public class GameResources
 	public static final BufferedImage IMG_PLATFORM_DOWN;
 	
 	public static final BufferedImage IMG_COIN;
+	public static final BufferedImage IMG_ENEMY;
 	public static final BufferedImage IMG_PORTAL;
 	
 	public static final BufferedImage[] IMG_ANIMATION_PLAYER = new BufferedImage[11];
@@ -49,6 +50,7 @@ public class GameResources
 		IMG_PLATFORM_UP = getImg("platformup.png");
 		IMG_PLATFORM_DOWN = getImg("platformdown.png");
 		IMG_COIN = getImg("coin.png");
+		IMG_ENEMY = getImg("enemy.png");
 		
 		for (int i = 0; i < IMG_ANIMATION_PLAYER.length; i++)
 			IMG_ANIMATION_PLAYER[i] = getImg("animation_player/walk" + (i+1) + ".png");

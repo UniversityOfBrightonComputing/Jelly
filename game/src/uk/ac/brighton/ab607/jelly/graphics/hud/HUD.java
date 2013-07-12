@@ -8,8 +8,7 @@ import java.util.Observer;
 
 import uk.ac.brighton.ab607.jelly.Model;
 import uk.ac.brighton.ab607.jelly.Player;
-import uk.ac.brighton.ab607.jelly.io.Out;
-
+import uk.ac.brighton.ab607.jelly.global.Global;
 
 /**
  * A set of HudObjects
@@ -22,25 +21,38 @@ public class HUD implements Observer {
      */
     private ArrayList<HudObject> hudObjects = new ArrayList<HudObject>();
     
-    private HudObject background = new HudObject(0, 0, IMG_BACKGROUND);
-    private HudText levelText = new HudText(100, 150, "test");
-    private HudObject hudLives = new HudObject(100, 100, IMG_HUD_LIVES, 3);
+    private HudStatBar background = new HudStatBar(0, 0, IMG_BACKGROUND, 1);
+    private HudStatBar hudLives = new HudStatBar(100, 100, IMG_HUD_LIVES, 3);
     
-    public HUD() {
+    private HudText levelText = new HudText(100, 150, "");
+    private HudText scoreText = new HudText((int) (0.9*Global.W), (int) (0.1*Global.H), "");
+    
+    public HUD(Model model) {
+        model.addObserver(this);
+        
         hudObjects.add(background);
-        hudObjects.add(levelText);
         hudObjects.add(hudLives);
+        hudObjects.add(levelText);
+        hudObjects.add(scoreText);
     }
     
     public ArrayList<HudObject> getObjects() {
         return hudObjects;
     }
 
+    /**
+     * Called when model has changed
+     */
     @Override
     public void update(Observable model, Object arg) {
-        final Player player = ((Model) model).getLevel().getPlayer();
-        levelText.setText("rend. test");
-       // Out.msg("called from update: " + player.getLives());
+        final Player player = ((Model) model).player;
+        
+        levelText.setText("dynamic text rendering test: OK");
         hudLives.setTimes(player.getLives());
+        scoreText.setText(player.getScore()+"");
+        
+        for (HudObject obj : hudObjects) {
+            obj.updateGraphics();
+        }
     }
 }

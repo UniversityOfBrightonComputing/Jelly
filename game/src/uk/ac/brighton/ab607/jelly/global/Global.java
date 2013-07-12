@@ -13,6 +13,6 @@ public class Global {
 	
 	public static final String APP_AUTHOR = "Almas";
 	public static final String APP_DESIGNER = "Atheryos";
-	public static final String APP_VERSION = "0.59";
+	public static final String APP_VERSION = "dev0.61";
 	public static final String APP_TITLE = "Jelly Project " + APP_VERSION + " | Author: " + APP_AUTHOR + " | Designer: " + APP_DESIGNER;
 }

@@ -3,36 +3,47 @@ package uk.ac.brighton.ab607.jelly.graphics.hud;
 import java.awt.image.BufferedImage;
 
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.Renderer;
-import uk.ac.brighton.ab607.jelly.io.Out;
 
 /**
  * A graphic object for game interface that
  * shows game info to the user
  * @author Almas
- * @version 0.1
+ * @version 0.2
  */
-public class HudObject extends GraphicObject {
-    private BufferedImage originalImage;
+public abstract class HudObject extends GraphicObject {
+    
+    /**
+     * Image to be used for rendering this object
+     */
     protected BufferedImage image;
     
+    /**
+     * @param x - top left X coordinate
+     * @param y - top left Y coordinate
+     * @param image - initial image to be used for render
+     */
     public HudObject(int x, int y, BufferedImage image) {
-        this(x, y, image, 1);
-    }
-    
-    public HudObject(int x, int y, BufferedImage image, int times) {
         super(x, y);
-        this.originalImage = image;
-        this.image = Renderer.createGraphics(originalImage, times);
-    }
-
-    public void setTimes(int times) {
-       // Out.msg("called from setTimes: " + times);
-        this.image = Renderer.createGraphics(originalImage, times);
+        this.image = image;
     }
     
     @Override
     public BufferedImage getImage() {
         return image;
     }
+    
+    /**
+     * Can be used to retrieve info about changes
+     * of this object
+     * @return - true if object changed since last poll,
+     *          false otherwise
+     */
+    public abstract boolean hasChanged();
+    
+    /**
+     * Ask this object to update its image
+     * e.g. redraw number of lives, redraw
+     * new text, etc
+     */
+    public abstract void updateGraphics();
 }

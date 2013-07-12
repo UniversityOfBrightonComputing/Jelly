@@ -1,137 +1,141 @@
 package uk.ac.brighton.ab607.jelly;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static uk.ac.brighton.ab607.jelly.global.Global.*;
-import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.hud.HudObject;
 import uk.ac.brighton.ab607.jelly.io.LevelReader;
 import static uk.ac.brighton.ab607.jelly.GameResources.*;
 
-public class GameLevel
-{
-	public enum LevelObject
-	{
-		PLAYER, COIN, PLATFORM, ENEMY, PORTAL
+/**
+ * A level in the game, contains all
+ * game objects read in from the text file
+ * @author Almas
+ * @version 0.5
+ */
+public class GameLevel {
+	public enum GameObjectType {
+	    COIN('2', IMG_COIN),
+	    PLATFORM('1', IMG_PLATFORM_UP),
+	    ENEMY('3', IMG_ENEMY),
+	    PORTAL('9', IMG_PORTAL);
+	    
+	    final char code;
+	    final BufferedImage image;
+	    private ArrayList<GameObject> list = new ArrayList<GameObject>();
+	    
+	    public void clear() {
+	        list.clear();
+	    }
+	    
+	    public void add(GameObject obj) {
+	        list.add(obj);
+	    }
+	    
+	    public ArrayList<GameObject> getObjects() {
+	        return new ArrayList<GameObject> (list);
+	    }
+	    
+	    private GameObjectType(char code, BufferedImage image) {
+	        this.code = code;
+	        this.image = image;
+	    }
 	};
 	
-	private LevelReader lr;
-
-	private int value = 0, length = 0;
+	/**
+	 * The number of lines in the level file
+	 * (from top to bottom):
+	 * 1st line above player
+	 * 2nd line same level above ground as player
+	 * 3rd line below player
+	 * 
+	 * Need to changed if more level lines are introduced
+	 */
+	private static final int MAX_LEVEL_LINES = 3;
 	
-	private Point origin;
+	/**
+	 * <code>value</code> - numeric value of this level
+	 * 1 is the first level where game starts
+	 * 2 - level 2, etc
+	 * 
+	 * <code>length</code> - length of this level in pixels
+	 */
+	public final int value, length;
 	
-	/**Objects that belong to this level. Can add custom objects like bonuses, mobs etc**/
-	private ArrayList<GameObject> platforms = new ArrayList<GameObject>();
-	private ArrayList<GameObject> portals = new ArrayList<GameObject>();
-	private ArrayList<GameObject> coins = new ArrayList<GameObject>();
-	private ArrayList<GameObject> enemies = new ArrayList<GameObject>();
-	private ArrayList<GameObject> players = new ArrayList<GameObject>();
+	/**
+	 * After this level has been initialised, this list
+	 * will contain all game objects that belong to this level
+	 */
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
-	public GameLevel(int level)
-	{
+	/**
+	 * Constructs and completely populates new level
+	 * @param level - value of the level (level 1, 2, etc)
+	 * @param origin - the point relative to which game objects will be created
+	 */
+	public GameLevel(int level, Point origin) {
+	    for (GameObjectType type : GameObjectType.values()) {
+	        type.clear();
+        }
 		value = level;
-		init();
-	}
-	
-	private void init()
-	{
-		lr = new LevelReader(value);
-		length = lr.getLevelLength();
-		origin = new Point();
-		populate();
-	}
-	
-	private void populate()
-	{
-		//create player
-		players.add(new Player(0, H - 2*SPRITE_SIZE, origin, IMG_ANIMATION_PLAYER));
-		
-		for (int i = 0; i < 3; i++)
-		{
-			String lines = lr.getLine(i);
-			
-			for (int j = 0; j < lines.length(); j++)
-			{
-				char c = lines.charAt(j);
-				
-				switch (c)
-				{
-					case '1':
-						platforms.add(new GameObject(j*SPRITE_SIZE, H-(3-i)*SPRITE_SIZE, origin, i == 2 ? IMG_PLATFORM_DOWN : IMG_PLATFORM_UP));
-						break;
-						
-					case '2':
-						coins.add(new GameObject(j*SPRITE_SIZE, H-(3-i)*SPRITE_SIZE, origin, IMG_ANIMATION_COIN));
-						break;
-						
-					case '3':
-						enemies.add(new GameObject(j*SPRITE_SIZE, H-(3-i)*SPRITE_SIZE, origin, IMG_ANIMATION_ENEMY));
-						break;
-						
-					case '9':
-						portals.add(new GameObject(j*SPRITE_SIZE, H-(3-i)*SPRITE_SIZE, origin, IMG_PORTAL));
-						break;
-						
-					default:
-						break;
-				}
-			}
-		}
-	}
-	
-	public GameObject[] getGameObject(LevelObject type)
-	{
-		ArrayList<GameObject> list = new ArrayList<GameObject>();
-		
-		switch (type)
-		{
-			case COIN:
-				list = coins;
-				break;
-				
-			case ENEMY:
-				list = enemies;
-				break;
-				
-			case PLATFORM:
-				list = platforms;
-				break;
-				
-			case PLAYER:
-				list = players;
-				break;
-				
-			case PORTAL:
-				list = portals;
-				break;
-		}
-		
-		GameObject[] tmp = new GameObject[list.size()];
-		list.toArray(tmp);
-		return tmp;
-	}
-	
-	public Player getPlayer() {
-	    return (Player) players.get(0);
-	}
-	
-	public Point getOrigin() {
-	    return origin;
+		LevelReader lr = new LevelReader(value);
+        length = lr.getLevelLength();
+        
+        String[] lines = new String[MAX_LEVEL_LINES];
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = lr.getLine(i);
+        }
+        
+        populate(lines, origin);
 	}
 	
 	/**
-	 * @return - numerical value of the current level
+	 * Populates this level with objects read
+	 * from the text file
+	 * @param lines - contains lines read from file
+	 * @param origin - origin relative to which place objects
 	 */
-	public int getValue() {
-		return value;
+	private final void populate(String[] lines, Point origin) {
+	    for (int i = 0; i < 3; i++) 
+	    {
+            String line = lines[i];
+            
+            for (int j = 0; j < line.length(); j++) 
+            {
+                char c = line.charAt(j);
+                
+                for (GameObjectType type : GameObjectType.values()) 
+                {
+                    if (c == type.code) {
+                        GameObject obj = new GameObject(j*SPRITE_SIZE, H-(3-i)*SPRITE_SIZE, origin, type.image);
+                        type.add(obj);
+                        gameObjects.add(obj);
+                        break;
+                    }
+                }
+            }
+        }
 	}
 	
 	/**
-	 * @return - length of the current level
-	 */
-	public int getLength() {
-		return length;
-	}
+	 * Can be used mainly for rendering them, since it does
+	 * contain all objects but the type and order are different
+     * @return - ALL game objects on this level
+     */
+    public ArrayList<GameObject> getGameObjects() {
+        return new ArrayList<GameObject>(gameObjects);
+    }
+    
+    /**
+     * Unlike <code>getGameObjects()</code> this can be
+     * used to retrieve only 1 type of objects
+     * @param type - specific type to return
+     * @return - objects on this level
+     */
+    public GameObject[] getGameObject(GameObjectType type) {
+        GameObject[] tmp = new GameObject[type.list.size()];
+        type.list.toArray(tmp);
+        return tmp;
+    }
 }
