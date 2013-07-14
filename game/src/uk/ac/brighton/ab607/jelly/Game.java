@@ -27,7 +27,7 @@ public class Game implements Runnable
 	
 	private Point origin;
 	
-	private boolean running = true;
+	public boolean running = true;
 	private boolean levelRunning = true;
 	
 	public Game(Model model, KeyInput controller) 
@@ -53,6 +53,7 @@ public class Game implements Runnable
 			platforms = level.getGameObject(GameObjectType.PLATFORM);
 			
 			GameObject[] coins = level.getGameObject(GameObjectType.COIN);
+			GameObject[] enemies = level.getGameObject(GameObjectType.ENEMY);
 			GameObject portal = level.getGameObject(GameObjectType.PORTAL)[0];
 			
 			levelRunning = true;
@@ -61,12 +62,19 @@ public class Game implements Runnable
 			{
 				PhysicsEngine.Gravity.pull(player, platforms);
 				
-				if (player.getY() >= Global.H) {
-				    if (player.getLives() > 0) {
-				        player.setLives(player.getLives()-1);
+				for (GameObject enemy : enemies) {
+				    if (!player.isAlive() || player.isColliding(enemy)) {
+    				    if (player.getLives() > 0) {
+    				        player.addToLives(-1);
+    				        model.resetState();
+    				    }
+    				    else {
+    				        levelRunning = false;
+    				        stopGame();
+    				    }
+  
+    				    break;
 				    }
-				    player.resetPosition();
-				    origin.x = 0;
 				}
 				
 				if (player.isJumping())
@@ -78,7 +86,7 @@ public class Game implements Runnable
 				for (GameObject coin : coins) {
 					if (player.isColliding(coin) && coin.isAlive()) {
 					    coin.setDead();
-					    player.setScore(player.getScore()+Global.SCORE_COIN);
+					    player.addToScore(Global.SCORE_COIN);
 					}
 				}
 

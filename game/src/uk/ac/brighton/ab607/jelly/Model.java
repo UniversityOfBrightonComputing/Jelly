@@ -50,13 +50,16 @@ public class Model extends Observable {
 	 */
 	private ArrayList<GameObject> dynamicRenderedObjects = new ArrayList<GameObject>();
 	
+	private final Game game;
+	
 	/**
 	 * Constructs an instance of GameModel and runs the thread associated
 	 * with the dynamic part of this model
 	 * @param controller - the keyboard input used by the view observing this model
 	 */
 	public Model(KeyInput controller) {
-		new Thread(new Game(this, controller)).start();   //run using separate thread	
+	    game = new Game(this, controller);
+	    new Thread(game).start();  //run using separate thread	
 		HUD hud = new HUD(this);  //pass this object to hud, so hud can observe it
 		staticRenderedObjects = hud.getObjects(); //get objects from hud
 	}
@@ -65,8 +68,7 @@ public class Model extends Observable {
 	 * Changes state of the model to a new level
 	 */
 	public void newLevel() {
-	    player.resetPosition();    //reset player's position
-	    origin.x = 0;  //reset origin
+	    resetState();
 		level = new GameLevel(level.value + 1, origin);	//create new level
 		dynamicRenderedObjects = level.getGameObjects();  //get game objects from new level
 		dynamicRenderedObjects.add(player);   //add player to them
@@ -92,12 +94,25 @@ public class Model extends Observable {
 
         return new ArrayList<GraphicObject>(tmp);
     }
+    
+    /**
+     * Ask model to place the player back to where he started
+     * and reset origin
+     */
+    public void resetState() {
+        player.resetPosition();    //reset player's position
+        origin.x = 0;  //reset origin
+    }
 	
 	/**
 	 * @return - current level
 	 */
 	public GameLevel getLevel() {
 		return level;
+	}
+	
+	public boolean isGameRunning() {
+	    return game.running;
 	}
 	
 	/**

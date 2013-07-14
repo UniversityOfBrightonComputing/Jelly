@@ -1,6 +1,7 @@
 package uk.ac.brighton.ab607.jelly.graphics.hud;
 
 import static uk.ac.brighton.ab607.jelly.GameResources.*;
+import static uk.ac.brighton.ab607.jelly.global.Global.*;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -25,7 +26,8 @@ public class HUD implements Observer {
     private HudStatBar hudLives = new HudStatBar(100, 100, IMG_HUD_LIVES, 3);
     
     private HudText levelText = new HudText(100, 150, "");
-    private HudText scoreText = new HudText((int) (0.9*Global.W), (int) (0.1*Global.H), "");
+    private HudText scoreText = new HudText((int) (0.9*W), (int) (0.1*H), "");
+    private HudText endGameText = new HudText((int) (0.5*W), (int) (0.5*H), "");
     
     public HUD(Model model) {
         model.addObserver(this);
@@ -34,6 +36,7 @@ public class HUD implements Observer {
         hudObjects.add(hudLives);
         hudObjects.add(levelText);
         hudObjects.add(scoreText);
+        hudObjects.add(endGameText);
     }
     
     public ArrayList<HudObject> getObjects() {
@@ -50,6 +53,15 @@ public class HUD implements Observer {
         levelText.setText("dynamic text rendering test: OK");
         hudLives.setTimes(player.getLives());
         scoreText.setText(player.getScore()+"");
+        
+        if (!((Model) model).isGameRunning()) {
+            if (player.getLives() <= 0) {
+                endGameText.setText("You lose");
+            }
+            else {
+                endGameText.setText("You win");
+            }
+        }
         
         for (HudObject obj : hudObjects) {
             obj.updateGraphics();

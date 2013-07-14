@@ -20,12 +20,12 @@ public class Player extends GameObject {
         super(x, y, origin, animation);
     }
     
-    public void setLives(int lives) {
-        this.lives = lives;
+    public void addToLives(int lives) {
+        this.lives += lives;
     }
     
-    public void setScore(int score) {
-        this.score = score;
+    public void addToScore(int score) {
+        this.score += score;
     }
 
     public int getLives() {
@@ -34,6 +34,11 @@ public class Player extends GameObject {
     
     public int getScore() {
         return score;
+    }
+    
+    @Override
+    public boolean isAlive() {
+        return this.getY() < H;
     }
 
     public void resetPosition() {
