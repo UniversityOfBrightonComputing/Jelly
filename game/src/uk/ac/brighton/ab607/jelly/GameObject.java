@@ -13,6 +13,8 @@ public class GameObject extends GraphicObject {
     private boolean jumping = false;
     protected boolean alive = true;
     
+    protected int maxJumpTime = 16;
+    
     private final Point defaultPosition;
     
     private int animationIndex = 0;
@@ -58,7 +60,7 @@ public class GameObject extends GraphicObject {
     
     public void jump(GameObject[] platforms) 
     {
-        if (jumpTime == 16)
+        if (jumpTime == maxJumpTime)
         {
             jumpTime = 0;
             jumping = false;

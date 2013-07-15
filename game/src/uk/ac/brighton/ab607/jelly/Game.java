@@ -52,6 +52,7 @@ public class Game implements Runnable {
 			platforms = level.getGameObject(GameObjectType.PLATFORM);
 			
 			GameObject[] coins = level.getGameObject(GameObjectType.COIN);
+			GameObject[] powerups = level.getGameObject(GameObjectType.POWERUP);
 			GameObject[] enemies = level.getGameObject(GameObjectType.ENEMY);
 			GameObject portal = level.getGameObject(GameObjectType.PORTAL)[0];
 			
@@ -89,6 +90,13 @@ public class Game implements Runnable {
 				if (player.isColliding(portal)) {
 				    stopLevel();
 				}
+				
+				for (GameObject p : powerups) {
+                    if (player.isColliding(p) && p.isAlive()) {
+                        p.setDead();
+                        player.powerUp();
+                    }
+                }
 				
 				for (GameObject coin : coins) {
 					if (player.isColliding(coin) && coin.isAlive()) {

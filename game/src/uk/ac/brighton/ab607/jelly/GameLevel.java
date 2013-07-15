@@ -19,7 +19,8 @@ public class GameLevel {
 	    COIN('2', IMG_COIN),
 	    PLATFORM('1', IMG_PLATFORM_UP),
 	    ENEMY('3', IMG_ENEMY),
-	    PORTAL('9', IMG_PORTAL);
+	    PORTAL('9', IMG_PORTAL),
+	    POWERUP('4', IMG_POWERUP);
 	    
 	    final char code;
 	    final BufferedImage image;

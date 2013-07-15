@@ -43,6 +43,14 @@ public class Player extends GameObject {
         return level;
     }
     
+    public void powerUp() {
+        this.maxJumpTime = 48;
+    }
+    
+    public void resetPowers() {
+        this.maxJumpTime = 16;
+    }
+    
     @Override
     public boolean isAlive() {
         return super.isAlive() && this.getY() < Global.H;

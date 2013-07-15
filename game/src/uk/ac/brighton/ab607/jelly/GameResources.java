@@ -27,6 +27,7 @@ public class GameResources
 	public static final BufferedImage IMG_PLATFORM_DOWN;
 	
 	public static final BufferedImage IMG_COIN;
+	public static final BufferedImage IMG_POWERUP;
 	public static final BufferedImage IMG_ENEMY;
 	public static final BufferedImage IMG_PORTAL;
 	
@@ -59,6 +60,8 @@ public class GameResources
 		IMG_ANIMATION_ENEMY[0] = getImg("enemy.png");
 		
 		IMG_HUD_LIVES = getImg("hud/lives.png");
+		
+		IMG_POWERUP = getImg("powerup.png");
 	}
 	
 	/**
