@@ -15,6 +15,10 @@ public class HudStatBar extends HudObject {
         this.times = times;
     }
     
+    public HudStatBar(double x, double y, BufferedImage image, int times) {
+        this((int)x, (int)y, image, times);
+    }
+    
     public void setTimes(int times) {
         if (this.times != times) {
             this.times = times;

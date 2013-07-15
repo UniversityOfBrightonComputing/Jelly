@@ -18,25 +18,40 @@ import static uk.ac.brighton.ab607.jelly.global.Global.*;
  */
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {
-	private ArrayList<GraphicObject> renderedObjects = new ArrayList<GraphicObject>();	//all objects that need to be rendered
+    private final ArrayList<GraphicObject> staticRenderedObjects;
+	private ArrayList<GraphicObject> dynamicRenderedObjects = new ArrayList<GraphicObject>();
 	
-	public View() {	
+	public View(ArrayList<GraphicObject> staticRenderedObjects) {	
 		setSize(W, H); // Size of window
 		setTitle(APP_TITLE);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.staticRenderedObjects = staticRenderedObjects;
 	}
 
 	/**
 	 * Code called to create the current state of the game
 	 * @param g - Graphics context to use
 	 */
-	public void renderPicture(Graphics2D g) {		
-		for (GraphicObject obj : renderedObjects) {
-		    g.drawImage(obj.getImage(), obj.getRenderX(), obj.getRenderY(), this);
-		    //g.drawRect(obj.getRenderX(), obj.getRenderY(), obj.getImage().getWidth(), obj.getImage().getHeight());    //DEBUG
+	private void renderPicture(Graphics2D g) {		
+	    for (GraphicObject obj : staticRenderedObjects) {
+	        render(g, obj);
+        }
+	       
+		for (GraphicObject obj : dynamicRenderedObjects) {
+		    render(g, obj);
 		}
+	}
+	
+	/**
+	 * Draws an object onto graphical space(context)
+	 * @param g - Graphics context to use
+	 * @param obj - object to draw
+	 */
+	private void render(Graphics2D g, GraphicObject obj) {
+	    g.drawImage(obj.getImage(), obj.getRenderX(), obj.getRenderY(), this);
+	    //g.drawRect(obj.getRenderX(), obj.getRenderY(), obj.getImage().getWidth(), obj.getImage().getHeight());    //DEBUG
 	}
 	
 	/**
@@ -44,7 +59,7 @@ public class View extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable model, Object arg) {
-		renderedObjects = ((Model) model).getRenderedObjects();
+		dynamicRenderedObjects = ((Model) model).getDynamicRenderedObjects();
 		repaint();
 	}
 	

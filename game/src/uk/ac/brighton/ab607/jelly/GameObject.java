@@ -7,18 +7,20 @@ import uk.ac.brighton.ab607.jelly.PhysicsEngine.Side;
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
 import uk.ac.brighton.ab607.jelly.graphics.GraphicUtils;
 
-public class GameObject extends GraphicObject
-{
+public class GameObject extends GraphicObject {
     private int dir = 1;    //need for proper animation, >0 right, <0 left
     private int jumpTime = 0;
     private boolean jumping = false;
-    private boolean alive = true;
+    protected boolean alive = true;
+    
+    private final Point defaultPosition;
     
     private int animationIndex = 0;
     private BufferedImage[] animation;
     
     public GameObject(int x, int y, Point origin, BufferedImage[] animation) {
         super(x, y, origin);
+        defaultPosition = new Point(x, y);
         this.animation = animation;
     }
     
@@ -32,6 +34,11 @@ public class GameObject extends GraphicObject
     
     public int getY() {
         return y;
+    }
+    
+    public void resetPosition() {
+        this.x = defaultPosition.x;
+        this.y = defaultPosition.y;
     }
 
     /**

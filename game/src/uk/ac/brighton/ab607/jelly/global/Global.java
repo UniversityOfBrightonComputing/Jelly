@@ -1,10 +1,14 @@
 package uk.ac.brighton.ab607.jelly.global;
 
+import java.awt.Point;
+
 public class Global {
 	public static final int W = 1280;
 	public static final int H = 720;
 	
 	public static final int SPRITE_SIZE = 64;
+	
+	public static final Point POINT_PLAYER_DEFAULT = new Point(0, H - 2*SPRITE_SIZE);
 	
 	public static final int SCORE_COIN = 100;
 	public static final int SCORE_BONUS = SCORE_COIN * 10;

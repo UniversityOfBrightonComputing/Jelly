@@ -9,7 +9,8 @@ import java.util.Observer;
 
 import uk.ac.brighton.ab607.jelly.Model;
 import uk.ac.brighton.ab607.jelly.Player;
-import uk.ac.brighton.ab607.jelly.global.Global;
+import uk.ac.brighton.ab607.jelly.debug.Debug;
+import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
 
 /**
  * A set of HudObjects
@@ -23,11 +24,12 @@ public class HUD implements Observer {
     private ArrayList<HudObject> hudObjects = new ArrayList<HudObject>();
     
     private HudStatBar background = new HudStatBar(0, 0, IMG_BACKGROUND, 1);
-    private HudStatBar hudLives = new HudStatBar(100, 100, IMG_HUD_LIVES, 3);
+    private HudStatBar hudLives = new HudStatBar(0.05*W, 0.1*H, IMG_HUD_LIVES, 3);
     
-    private HudText levelText = new HudText(100, 150, "");
-    private HudText scoreText = new HudText((int) (0.9*W), (int) (0.1*H), "");
-    private HudText endGameText = new HudText((int) (0.5*W), (int) (0.5*H), "");
+    private HudText levelText = new HudText(0.05*W, 0.15*H, "");
+    private HudText scoreText = new HudText(0.9*W, 0.1*H, "");
+    private HudText endGameText = new HudText(0.5*W, 0.5*H, "");
+    private HudText debug = new HudText(0.75*W, 0.15*H, "");
     
     public HUD(Model model) {
         model.addObserver(this);
@@ -37,10 +39,11 @@ public class HUD implements Observer {
         hudObjects.add(levelText);
         hudObjects.add(scoreText);
         hudObjects.add(endGameText);
+        hudObjects.add(debug);
     }
     
-    public ArrayList<HudObject> getObjects() {
-        return hudObjects;
+    public ArrayList<GraphicObject> getObjects() {
+        return new ArrayList<GraphicObject> (hudObjects);
     }
 
     /**
@@ -50,9 +53,10 @@ public class HUD implements Observer {
     public void update(Observable model, Object arg) {
         final Player player = ((Model) model).player;
         
-        levelText.setText("dynamic text rendering test: OK");
+        levelText.setText("Level " + player.getLevel());
         hudLives.setTimes(player.getLives());
         scoreText.setText(player.getScore()+"");
+        debug.setText(Debug.getLastMessage());
         
         if (!((Model) model).isGameRunning()) {
             if (player.getLives() <= 0) {

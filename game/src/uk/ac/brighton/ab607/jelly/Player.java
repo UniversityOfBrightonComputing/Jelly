@@ -1,23 +1,22 @@
 package uk.ac.brighton.ab607.jelly;
 
-import static uk.ac.brighton.ab607.jelly.global.Global.H;
-import static uk.ac.brighton.ab607.jelly.global.Global.SPRITE_SIZE;
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import uk.ac.brighton.ab607.jelly.global.Global;
 
 /**
  * The player with all his unique abilities
  * and fields. At a later stage other game objects
  * might get some of these abilities
  * @author Almas
- * @version 0.1
+ * @version 0.2
  */
 public class Player extends GameObject {
-    private int score = 0, lives = 3;
+    private int level = 0, score = 0, lives = 3;
 
-    public Player(int x, int y, Point origin, BufferedImage[] animation) {
-        super(x, y, origin, animation);
+    public Player(Point defaultPosition, BufferedImage[] animation) {
+        super(defaultPosition.x, defaultPosition.y, new Point(0, 0), animation);
     }
     
     public void addToLives(int lives) {
@@ -36,13 +35,26 @@ public class Player extends GameObject {
         return score;
     }
     
+    public void setLevel(int level) {
+        this.level = level;
+    }
+    
+    public int getLevel() {
+        return level;
+    }
+    
     @Override
     public boolean isAlive() {
-        return this.getY() < H;
+        return super.isAlive() && this.getY() < Global.H;
     }
 
-    public void resetPosition() {
-        this.x = 0;
-        this.y = H - 2*SPRITE_SIZE;
+    public void reset() {
+        super.resetPosition();
+        this.origin.x = 0;
+        this.alive = true;
+    }
+    
+    public Point getOrigin() {
+        return this.origin;
     }
 }

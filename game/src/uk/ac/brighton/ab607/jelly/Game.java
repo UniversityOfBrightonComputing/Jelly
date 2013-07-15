@@ -5,6 +5,7 @@ import static uk.ac.brighton.ab607.jelly.global.Global.W;
 import java.awt.Point;
 import java.util.HashMap;
 
+import uk.ac.brighton.ab607.jelly.debug.Debug;
 import uk.ac.brighton.ab607.jelly.global.Global;
 import uk.ac.brighton.ab607.jelly.io.KeyInput;
 import uk.ac.brighton.ab607.jelly.io.KeyInput.GameEvent;
@@ -14,10 +15,9 @@ import uk.ac.brighton.ab607.jelly.GameLevel.GameObjectType;
 /**
  * A dynamic representation of the game
  * @author - Almas
- * @version - 0.7
+ * @version - 0.8
  */
-public class Game implements Runnable
-{
+public class Game implements Runnable {
 	private Model model;
 	private KeyInput controller;
 	
@@ -25,15 +25,17 @@ public class Game implements Runnable
 	private Player player;
 	private GameObject[] platforms;
 	
+	//TO DO integrate origin into player, so when player moves, origin moves too
 	private Point origin;
 	
-	public boolean running = true;
+	private boolean running = true;
 	private boolean levelRunning = true;
 	
-	public Game(Model model, KeyInput controller) 
-	{
+	public Game(Model model, KeyInput controller) {
 		this.model = model;
 		this.controller = controller;
+        player = model.player;
+        origin = player.getOrigin();
 	}
 	
 	/**
@@ -41,15 +43,12 @@ public class Game implements Runnable
 	 * If it stops, the game stops, program exits
 	 **/
 	@Override
-	public void run()
-	{
+	public void run() {
 		while (running)
 		{
-			model.newLevel();
-			level = model.getLevel();
-			origin = model.origin;
+			level = model.newLevel();
+			player.reset();
 			
-			player = model.player;
 			platforms = level.getGameObject(GameObjectType.PLATFORM);
 			
 			GameObject[] coins = level.getGameObject(GameObjectType.COIN);
@@ -58,30 +57,38 @@ public class Game implements Runnable
 			
 			levelRunning = true;
 			
-			while (levelRunning)
+			while (levelRunning)		    
 			{
+			    long start = System.currentTimeMillis();
+			    
+			    
 				PhysicsEngine.Gravity.pull(player, platforms);
 				
 				for (GameObject enemy : enemies) {
-				    if (!player.isAlive() || player.isColliding(enemy)) {
-    				    if (player.getLives() > 0) {
-    				        player.addToLives(-1);
-    				        model.resetState();
-    				    }
-    				    else {
-    				        levelRunning = false;
-    				        stopGame();
-    				    }
-  
-    				    break;
+                    if (player.isColliding(enemy)) {
+                        player.setDead();
+                        break;
+                    }
+                }
+				
+			    if (!player.isAlive()) {
+				    if (player.getLives() > 0) {
+				        player.addToLives(-1);
+				        player.reset();
 				    }
-				}
+				    else {
+				        stopLevel();
+				        stopGame();
+				    }
+			    }
+
 				
 				if (player.isJumping())
 					player.jump(platforms);
 				
-				if (player.isColliding(portal))
-					levelRunning = false;
+				if (player.isColliding(portal)) {
+				    stopLevel();
+				}
 				
 				for (GameObject coin : coins) {
 					if (player.isColliding(coin) && coin.isAlive()) {
@@ -92,7 +99,13 @@ public class Game implements Runnable
 
 				
 				handleGameEvents();
+
 				model.modelChanged();
+				
+				long finish = System.currentTimeMillis()-start;
+				if (finish > 0)
+				    Debug.msg("Performance report: " + finish + " ms");
+			
 				sleep();
 			}
 		}
@@ -101,8 +114,7 @@ public class Game implements Runnable
 	/**
 	 * Game events handler, will do for the moment
 	 */
-	private void handleGameEvents()
-	{
+	private void handleGameEvents() {
 		HashMap<GameEvent, Boolean> events = controller.getEvents();
 
 		for (GameEvent currentEvent : events.keySet())
@@ -138,12 +150,22 @@ public class Game implements Runnable
 	 * so gets refresh rate and sleeps
 	 * 1000/refresh rate
 	 */
-	public void sleep() 
-	{
+	public void sleep() {
 		try {Thread.sleep(17);} 
 		catch (InterruptedException ie) {
 		    ie.printStackTrace();
 		};
+	}
+	
+	public boolean isRunning() {
+	    return running;
+	}
+	
+	/**
+	 * Stops current level
+	 */
+	public void stopLevel() {
+	    levelRunning = false;
 	}
 	
 	/**

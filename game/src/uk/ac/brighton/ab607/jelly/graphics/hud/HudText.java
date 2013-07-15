@@ -10,6 +10,10 @@ public class HudText extends HudObject {
 		super(x, y, Renderer.createGraphics(text));
 	}
 	
+	public HudText(double x, double y, String text) {
+        this((int)x, (int)y, text);
+    }
+	
 	public void setText(String text) {
 	    if (!this.text.equals(text)) {
 	        this.text = text;

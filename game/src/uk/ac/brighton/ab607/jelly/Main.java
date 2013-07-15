@@ -8,14 +8,12 @@ import uk.ac.brighton.ab607.jelly.io.KeyInput;
  * and to start the game
  * @author Almas
  */
-public class Main
-{
-	public static void main(String[] args)
-	{
+public class Main {
+	public static void main(String[] args) {
 		KeyInput keyboard = new KeyInput();
 		
 		Model model = new Model(keyboard);
-		View view = new View();
+		View view = new View(model.staticRenderedObjects);
 		
 		view.addKeyListener(keyboard);
 		
