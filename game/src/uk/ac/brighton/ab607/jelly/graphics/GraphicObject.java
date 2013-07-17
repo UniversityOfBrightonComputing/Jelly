@@ -7,51 +7,41 @@ public abstract class GraphicObject {
     /**
      * Top left X, Y coordinates
      */
-	protected int x, y;
-	
-	/**
-     * The origin used for rendering objects on the screen
-     * As player moves the origin will change, thus
-     * allowing other objects appropriately draw themselves
-     * because their relative position on the screen is based
-     * on this origin
-     */
-	protected final Point origin;
+	private int x, y;
 	
 	/**
      * Constructs a graphics object at x, y location
-     * with the supplied origin
      * @param x - top left X coordinate
      * @param y - top left Y coordinate
-     * @param origin - point of origin for this object
      */
-	public GraphicObject(int x, int y, Point origin) {
-		this.x = x; this.y = y;
-		this.origin = origin;
-	}
-	
-	/**
-	 * Constructs a graphics object at x, y location
-	 * with 0, 0 origin
-	 * @param x - top left X coordinate
-	 * @param y - top left Y coordinate
-	 */
 	public GraphicObject(int x, int y) {
-	    this(x, y, new Point());
+		this.x = x; this.y = y;
+	}
+	
+	public GraphicObject(Point position) {
+	    this(position.x, position.y);
+	}
+	
+	public void setX(int x) {
+	    this.x = x;
+	}
+	
+	public void setY(int y) {
+        this.y = y;
+    }
+	
+	/**
+	 * @return - top left X coordinate
+	 */
+	public int getX() {
+		return x;
 	}
 	
 	/**
-	 * @return - top left X coordinate for drawing
+	 * @return - top left Y coordinate
 	 */
-	public int getRenderX() {
-		return x - origin.x;
-	}
-	
-	/**
-	 * @return - top left Y coordinate for drawing
-	 */
-	public int getRenderY() {
-		return y - origin.y;
+	public int getY() {
+		return y;
 	}
 	
 	/**

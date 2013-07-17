@@ -6,28 +6,33 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JFrame;
 
+import uk.ac.brighton.ab607.jelly.gameobject.Player;
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
+import uk.ac.brighton.ab607.jelly.graphics.hud.HudObject;
 import static uk.ac.brighton.ab607.jelly.global.Global.*;
 
 /**
  * Displays a graphical view of the game
  * @author Almas
- * @version 0.9
+ * @version 1.0
  */
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {
-    private final ArrayList<GraphicObject> staticRenderedObjects;
+    private final Player player;
+    private final ArrayList<HudObject> hudObjects;
 	private ArrayList<GraphicObject> dynamicRenderedObjects = new ArrayList<GraphicObject>();
 	
-	public View(ArrayList<GraphicObject> staticRenderedObjects) {	
+	public View(Player player, ArrayList<HudObject> hudObjects) {	
 		setSize(W, H); // Size of window
 		setTitle(APP_TITLE);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.staticRenderedObjects = staticRenderedObjects;
+		this.player = player;
+		this.hudObjects = hudObjects;
 	}
 
 	/**
@@ -35,13 +40,15 @@ public class View extends JFrame implements Observer {
 	 * @param g - Graphics context to use
 	 */
 	private void renderPicture(Graphics2D g) {		
-	    for (GraphicObject obj : staticRenderedObjects) {
-	        render(g, obj);
+	    for (GraphicObject obj : hudObjects) {
+	        renderStatic(g, obj);
         }
 	       
 		for (GraphicObject obj : dynamicRenderedObjects) {
-		    render(g, obj);
+		    renderDynamic(g, obj);
 		}
+		
+		renderDynamic(g, player);
 	}
 	
 	/**
@@ -49,10 +56,19 @@ public class View extends JFrame implements Observer {
 	 * @param g - Graphics context to use
 	 * @param obj - object to draw
 	 */
-	private void render(Graphics2D g, GraphicObject obj) {
-	    g.drawImage(obj.getImage(), obj.getRenderX(), obj.getRenderY(), this);
-	    //g.drawRect(obj.getRenderX(), obj.getRenderY(), obj.getImage().getWidth(), obj.getImage().getHeight());    //DEBUG
+	private void renderDynamic(Graphics2D g, GraphicObject obj) {
+	    g.drawImage(obj.getImage(), obj.getX() - player.origin.x, obj.getY(), this);
+	    //g.drawRect(obj.getX() - player.origin.x, obj.getY(), obj.getImage().getWidth(), obj.getImage().getHeight());    //DEBUG
 	}
+	
+	/**
+     * Draws an object onto graphical space(context)
+     * @param g - Graphics context to use
+     * @param obj - object to draw
+     */
+    private void renderStatic(Graphics2D g, GraphicObject obj) {
+        g.drawImage(obj.getImage(), obj.getX(), obj.getY(), this);
+    }
 	
 	/**
 	 * Called from the model when its state has changed

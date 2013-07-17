@@ -32,8 +32,6 @@ public class GameResources
 	public static final BufferedImage IMG_PORTAL;
 	
 	public static final BufferedImage[] IMG_ANIMATION_PLAYER = new BufferedImage[11];
-	public static final BufferedImage[] IMG_ANIMATION_COIN = new BufferedImage[1];
-	public static final BufferedImage[] IMG_ANIMATION_ENEMY = new BufferedImage[1];
 	
 	public static final BufferedImage IMG_HUD_LIVES;
 	
@@ -41,8 +39,7 @@ public class GameResources
 	 * Loads all necessary in-game resources
 	 * such as images and sounds
 	 */
-	static
-	{
+	static {
 	    /*LOADING IMAGES*/
 		IMG_NULL = getImg("null.png");
 		IMG_PLAYER = getImg("player.png");
@@ -55,9 +52,6 @@ public class GameResources
 		
 		for (int i = 0; i < IMG_ANIMATION_PLAYER.length; i++)
 			IMG_ANIMATION_PLAYER[i] = getImg("animation_player/walk" + (i+1) + ".png");
-		
-		IMG_ANIMATION_COIN[0] = IMG_COIN;
-		IMG_ANIMATION_ENEMY[0] = getImg("enemy.png");
 		
 		IMG_HUD_LIVES = getImg("hud/lives.png");
 		

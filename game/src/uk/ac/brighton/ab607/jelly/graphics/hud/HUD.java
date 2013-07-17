@@ -8,8 +8,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import uk.ac.brighton.ab607.jelly.Model;
-import uk.ac.brighton.ab607.jelly.Player;
 import uk.ac.brighton.ab607.jelly.debug.Debug;
+import uk.ac.brighton.ab607.jelly.gameobject.Player;
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
 
 /**
@@ -21,7 +21,7 @@ public class HUD implements Observer {
     /**
      * Holds all hud objects to be shown to screen
      */
-    private ArrayList<HudObject> hudObjects = new ArrayList<HudObject>();
+    public final ArrayList<HudObject> hudObjects = new ArrayList<HudObject>();
     
     private HudStatBar background = new HudStatBar(0, 0, IMG_BACKGROUND, 1);
     private HudStatBar hudLives = new HudStatBar(0.05*W, 0.1*H, IMG_HUD_LIVES, 3);
@@ -31,9 +31,7 @@ public class HUD implements Observer {
     private HudText endGameText = new HudText(0.5*W, 0.5*H, "");
     private HudText debug = new HudText(0.75*W, 0.15*H, "");
     
-    public HUD(Model model) {
-        model.addObserver(this);
-        
+    public HUD() {
         hudObjects.add(background);
         hudObjects.add(hudLives);
         hudObjects.add(levelText);
@@ -42,8 +40,8 @@ public class HUD implements Observer {
         hudObjects.add(debug);
     }
     
-    public ArrayList<GraphicObject> getObjects() {
-        return new ArrayList<GraphicObject> (hudObjects);
+    public ArrayList<HudObject> getObjects() {
+        return hudObjects;
     }
 
     /**

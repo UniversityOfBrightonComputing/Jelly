@@ -6,10 +6,11 @@ import java.awt.Point;
 import java.util.HashMap;
 
 import uk.ac.brighton.ab607.jelly.debug.Debug;
+import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
+import uk.ac.brighton.ab607.jelly.gameobject.Player;
 import uk.ac.brighton.ab607.jelly.global.Global;
 import uk.ac.brighton.ab607.jelly.io.KeyInput;
 import uk.ac.brighton.ab607.jelly.io.KeyInput.GameEvent;
-import uk.ac.brighton.ab607.jelly.GameLevel.GameObjectType;
 
 
 /**
@@ -35,7 +36,7 @@ public class Game implements Runnable {
 		this.model = model;
 		this.controller = controller;
         player = model.player;
-        origin = player.getOrigin();
+        origin = player.origin;
 	}
 	
 	/**
@@ -49,56 +50,44 @@ public class Game implements Runnable {
 			level = model.newLevel();
 			player.reset();
 			
-			platforms = level.getGameObject(GameObjectType.PLATFORM);
-			
-			GameObject[] coins = level.getGameObject(GameObjectType.COIN);
-			GameObject[] powerups = level.getGameObject(GameObjectType.POWERUP);
-			GameObject[] enemies = level.getGameObject(GameObjectType.ENEMY);
-			GameObject portal = level.getGameObject(GameObjectType.PORTAL)[0];
+			platforms = new GameObject[level.platforms.size()];
+			level.platforms.toArray(platforms);
 			
 			levelRunning = true;
 			
 			while (levelRunning)		    
 			{
 			    long start = System.currentTimeMillis();
-			    
-			    
+			     
 				PhysicsEngine.Gravity.pull(player, platforms);
 				
-				for (GameObject enemy : enemies) {
+				for (GameObject enemy : level.enemies) {
                     if (player.isColliding(enemy)) {
                         player.setDead();
                         break;
                     }
                 }
 				
-			    if (!player.isAlive()) {
+				if (!player.isAlive()) {
 				    if (player.getLives() > 0) {
-				        player.addToLives(-1);
-				        player.reset();
-				    }
-				    else {
-				        stopLevel();
-				        stopGame();
-				    }
-			    }
+                        player.addToLives(-1);
+                        player.reset();
+                    }
+                    else {
+                        stopLevel();
+                        stopGame();
+                    }
+				}
 
 				
 				if (player.isJumping())
 					player.jump(platforms);
 				
-				if (player.isColliding(portal)) {
+				if (player.isColliding(level.portals.get(0))) {
 				    stopLevel();
 				}
 				
-				for (GameObject p : powerups) {
-                    if (player.isColliding(p) && p.isAlive()) {
-                        p.setDead();
-                        player.powerUp();
-                    }
-                }
-				
-				for (GameObject coin : coins) {
+				for (GameObject coin : level.coins) {
 					if (player.isColliding(coin) && coin.isAlive()) {
 					    coin.setDead();
 					    player.addToScore(Global.SCORE_COIN);

@@ -1,49 +1,25 @@
 package uk.ac.brighton.ab607.jelly;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static uk.ac.brighton.ab607.jelly.global.Global.*;
+import uk.ac.brighton.ab607.jelly.gameobject.Coin;
+import uk.ac.brighton.ab607.jelly.gameobject.Enemy;
+import uk.ac.brighton.ab607.jelly.gameobject.Coin.CoinType;
+import uk.ac.brighton.ab607.jelly.gameobject.Enemy.EnemyType;
+import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
+import uk.ac.brighton.ab607.jelly.gameobject.Platform;
+import uk.ac.brighton.ab607.jelly.gameobject.Platform.PlatformType;
+import uk.ac.brighton.ab607.jelly.gameobject.Portal;
 import uk.ac.brighton.ab607.jelly.io.LevelReader;
-import static uk.ac.brighton.ab607.jelly.GameResources.*;
 
 /**
  * A level in the game, contains all
  * game objects read in from the text file
  * @author Almas
- * @version 0.5
+ * @version 0.8
  */
 public class GameLevel {
-	public enum GameObjectType {
-	    COIN('2', IMG_COIN),
-	    PLATFORM('1', IMG_PLATFORM_UP),
-	    ENEMY('3', IMG_ENEMY),
-	    PORTAL('9', IMG_PORTAL),
-	    POWERUP('4', IMG_POWERUP);
-	    
-	    final char code;
-	    final BufferedImage image;
-	    private ArrayList<GameObject> list = new ArrayList<GameObject>();
-	    
-	    public void clear() {
-	        list.clear();
-	    }
-	    
-	    public void add(GameObject obj) {
-	        list.add(obj);
-	    }
-	    
-	    public ArrayList<GameObject> getObjects() {
-	        return new ArrayList<GameObject> (list);
-	    }
-	    
-	    private GameObjectType(char code, BufferedImage image) {
-	        this.code = code;
-	        this.image = image;
-	    }
-	};
-	
 	/**
 	 * The number of lines in the level file
 	 * (from top to bottom):
@@ -70,16 +46,17 @@ public class GameLevel {
 	 */
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
+	public final ArrayList<Coin> coins = new ArrayList<Coin>();
+	public final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	public final ArrayList<Platform> platforms = new ArrayList<Platform>();
+	public final ArrayList<Portal> portals = new ArrayList<Portal>();
+	
 	/**
 	 * Constructs and completely populates new level
-	 * @param level - value of the level (level 1, 2, etc)
-	 * @param origin - the point relative to which game objects will be created
+	 * @param value - value of the level
 	 */
-	public GameLevel(int level, Point origin) {
-	    for (GameObjectType type : GameObjectType.values()) {
-	        type.clear();
-        }
-		value = level;
+	public GameLevel(int value) {
+	    this.value = value;
 		LevelReader lr = new LevelReader(value);
         length = lr.getLevelLength();
         
@@ -88,35 +65,55 @@ public class GameLevel {
             lines[i] = lr.getLine(i);
         }
         
-        populate(lines, origin);
+        populate(lines);
 	}
 	
 	/**
 	 * Populates this level with objects read
 	 * from the text file
 	 * @param lines - contains lines read from file
-	 * @param origin - origin relative to which place objects
 	 */
-	private final void populate(String[] lines, Point origin) {
+	private final void populate(String[] lines) {
 	    for (int i = 0; i < 3; i++) 
 	    {
             String line = lines[i];
             
             for (int j = 0; j < line.length(); j++) 
             {
-                char c = line.charAt(j);
-                
-                for (GameObjectType type : GameObjectType.values()) 
-                {
-                    if (c == type.code) {
-                        GameObject obj = new GameObject(j*SPRITE_SIZE, H-(3-i)*SPRITE_SIZE, origin, type.image);
-                        type.add(obj);
-                        gameObjects.add(obj);
-                        break;
-                    }
-                }
+                createGameObject(line.charAt(j), i, j);
             }
         }
+	    
+	    gameObjects.addAll(coins);
+	    gameObjects.addAll(enemies);
+	    gameObjects.addAll(platforms);
+	    gameObjects.addAll(portals);
+	}
+	
+	private void createGameObject(char code, int line, int position) {
+	    int x = position*SPRITE_SIZE;
+	    int y = H - (MAX_LEVEL_LINES - line)*SPRITE_SIZE;
+	    
+	    switch (code) {
+	        case Coin.ID:
+	            coins.add(new Coin(x, y, CoinType.MEDIUM));
+	            break;
+	            
+	        case Enemy.ID:
+	            enemies.add(new Enemy(x, y, EnemyType.FLY));
+	            break;
+	            
+	        case Platform.ID:
+	            platforms.add(new Platform(x, y, line == MAX_LEVEL_LINES-1 ? PlatformType.LOWER : PlatformType.UPPER));
+	            break;
+	            
+	        case Portal.ID:
+	            portals.add(new Portal(x, y));
+	            break;
+	           
+            default: 
+                break;
+	    }
 	}
 	
 	/**
@@ -125,18 +122,6 @@ public class GameLevel {
      * @return - ALL game objects on this level
      */
     public ArrayList<GameObject> getGameObjects() {
-        return new ArrayList<GameObject>(gameObjects);
-    }
-    
-    /**
-     * Unlike <code>getGameObjects()</code> this can be
-     * used to retrieve only 1 type of objects
-     * @param type - specific type to return
-     * @return - objects on this level
-     */
-    public GameObject[] getGameObject(GameObjectType type) {
-        GameObject[] tmp = new GameObject[type.list.size()];
-        type.list.toArray(tmp);
-        return tmp;
+        return gameObjects;
     }
 }

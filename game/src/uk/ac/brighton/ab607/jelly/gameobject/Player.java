@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly;
+package uk.ac.brighton.ab607.jelly.gameobject;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -10,13 +10,22 @@ import uk.ac.brighton.ab607.jelly.global.Global;
  * and fields. At a later stage other game objects
  * might get some of these abilities
  * @author Almas
- * @version 0.2
+ * @version 0.3
  */
 public class Player extends GameObject {
     private int level = 0, score = 0, lives = 3;
+    
+    /**
+     * The origin used for rendering objects on the screen
+     * As player moves the origin will change, thus
+     * allowing other objects appropriately draw themselves
+     * because their relative position on the screen is based
+     * on this origin
+     */
+    public final Point origin = new Point(0, 0);
 
     public Player(Point defaultPosition, BufferedImage[] animation) {
-        super(defaultPosition.x, defaultPosition.y, new Point(0, 0), animation);
+        super(defaultPosition.x, defaultPosition.y, animation);
     }
     
     public void addToLives(int lives) {
@@ -43,26 +52,14 @@ public class Player extends GameObject {
         return level;
     }
     
-    public void powerUp() {
-        this.maxJumpTime = 48;
-    }
-    
-    public void resetPowers() {
-        this.maxJumpTime = 16;
-    }
-    
     @Override
     public boolean isAlive() {
         return super.isAlive() && this.getY() < Global.H;
     }
 
     public void reset() {
-        super.resetPosition();
+        resetPosition();
         this.origin.x = 0;
-        this.alive = true;
-    }
-    
-    public Point getOrigin() {
-        return this.origin;
+        setAlive();
     }
 }

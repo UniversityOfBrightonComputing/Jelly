@@ -3,15 +3,16 @@ package uk.ac.brighton.ab607.jelly;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
+import uk.ac.brighton.ab607.jelly.gameobject.Player;
 import uk.ac.brighton.ab607.jelly.global.Global;
 import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.hud.HUD;
 import uk.ac.brighton.ab607.jelly.io.KeyInput;
 
 /**
  * Static model of the game
  * @author Almas
- * @version 1.2
+ * @version 1.3
  */
 public class Model extends Observable {
 	/**
@@ -19,12 +20,6 @@ public class Model extends Observable {
 	 * whole game and is independent from level
 	 */
 	public final Player player = new Player(Global.POINT_PLAYER_DEFAULT, GameResources.IMG_ANIMATION_PLAYER);
-	
-	/**
-	 * Contains references to the same objects used throughout the game.
-	 * e.g. these references point to same objects even when level changes
-	 */
-	public final ArrayList<GraphicObject> staticRenderedObjects;
 	
 	/**
 	 * Contains references to objects specific to particular level
@@ -44,15 +39,13 @@ public class Model extends Observable {
 	public Model(KeyInput controller) {
 	    game = new Game(this, controller);
 	    new Thread(game).start();
-		staticRenderedObjects = new HUD(this).getObjects();
-		staticRenderedObjects.add(player);
 	}
 	
 	/**
 	 * Changes state of the model to a new level
 	 */
 	public GameLevel newLevel() {
-		GameLevel level = new GameLevel(player.getLevel() + 1, player.getOrigin());
+		GameLevel level = new GameLevel(player.getLevel() + 1);
 		player.setLevel(level.value);
 		dynamicRenderedObjects = level.getGameObjects();
 		return level;
