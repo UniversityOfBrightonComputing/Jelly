@@ -1,5 +1,7 @@
 package uk.ac.brighton.ab607.jelly.gameobject;
 
+import java.awt.image.BufferedImage;
+
 import uk.ac.brighton.ab607.jelly.GameResources;
 import uk.ac.brighton.ab607.jelly.global.Global;
 
@@ -23,6 +25,11 @@ public class Powerup extends GameObject {
     @Override
     public boolean isStatic() {
         return active;
+    }
+    
+    @Override
+    public BufferedImage getImage() {
+        return active ? GameResources.IMG_POWERUP_SMALL : GameResources.IMG_POWERUP;
     }
     
     @Override
