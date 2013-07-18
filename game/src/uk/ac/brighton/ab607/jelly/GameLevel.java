@@ -45,7 +45,7 @@ public class GameLevel {
 	 * After this level has been initialised, this list
 	 * will contain all game objects that belong to this level
 	 */
-	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+	public final ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	public final ArrayList<Coin> coins = new ArrayList<Coin>();
 	public final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -122,13 +122,4 @@ public class GameLevel {
                 break;
 	    }
 	}
-	
-	/**
-	 * Can be used mainly for rendering them, since it does
-	 * contain all objects but the type and order are different
-     * @return - ALL game objects on this level
-     */
-    public ArrayList<GameObject> getGameObjects() {
-        return gameObjects;
-    }
 }

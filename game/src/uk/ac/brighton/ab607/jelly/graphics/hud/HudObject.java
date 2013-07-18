@@ -8,7 +8,7 @@ import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
  * A graphic object for game interface that
  * shows game info to the user
  * @author Almas
- * @version 0.2
+ * @version 0.3
  */
 public abstract class HudObject extends GraphicObject {
     

@@ -10,12 +10,11 @@ import java.util.Observer;
 import uk.ac.brighton.ab607.jelly.Model;
 import uk.ac.brighton.ab607.jelly.debug.Debug;
 import uk.ac.brighton.ab607.jelly.gameobject.Player;
-import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
 
 /**
  * A set of HudObjects
  * @author Almas
- * @version 0.1
+ * @version 0.3
  */
 public class HUD implements Observer {
     /**

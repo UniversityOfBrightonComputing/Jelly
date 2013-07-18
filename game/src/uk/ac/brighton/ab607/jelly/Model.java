@@ -12,7 +12,7 @@ import uk.ac.brighton.ab607.jelly.io.KeyInput;
 /**
  * Static model of the game
  * @author Almas
- * @version 1.3
+ * @version 1.4
  */
 public class Model extends Observable {
 	/**
@@ -32,9 +32,9 @@ public class Model extends Observable {
 	private final Game game;
 	
 	/**
-	 * Constructs an instance of GameModel and runs the thread associated
+	 * Constructs an instance and runs the thread associated
 	 * with the dynamic part of this model
-	 * @param controller - the keyboard input used by the view observing this model
+	 * @param controller - the keyboard input that will be used by game
 	 */
 	public Model(KeyInput controller) {
 	    game = new Game(this, controller);
@@ -47,7 +47,7 @@ public class Model extends Observable {
 	public GameLevel newLevel() {
 		GameLevel level = new GameLevel(player.getLevel() + 1);
 		player.setLevel(level.value);
-		dynamicRenderedObjects = level.getGameObjects();
+		dynamicRenderedObjects = level.gameObjects;
 		return level;
 	}
 	
@@ -62,15 +62,6 @@ public class Model extends Observable {
 	    
 	    return tmp;
 	}
-
-	/**
-     * The list returned will only contain objects that are renderable
-     * at this moment (i.e. not dead)
-     * @return - list of dynamic objects that need to be rendered now
-     */
-    public ArrayList<GraphicObject> getDynamicRenderedObjects() {
-        return getAliveObjects();
-    }
 	
 	/**
 	 * @return true if dynamic part is running, else false

@@ -3,7 +3,6 @@ package uk.ac.brighton.ab607.jelly.gameobject;
 import java.awt.image.BufferedImage;
 
 import uk.ac.brighton.ab607.jelly.GameResources;
-import uk.ac.brighton.ab607.jelly.global.Global;
 
 public class Powerup extends GameObject {
     public static final char ID = '4';

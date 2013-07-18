@@ -26,7 +26,7 @@ public class View extends JFrame implements Observer {
 	private ArrayList<GraphicObject> dynamicRenderedObjects = new ArrayList<GraphicObject>();
 	
 	public View(Player player, ArrayList<HudObject> hudObjects) {	
-		setSize(W, H); // Size of window
+		setSize(W, H);
 		setTitle(APP_TITLE);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -50,26 +50,12 @@ public class View extends JFrame implements Observer {
 		
 		render(g, player);
 	}
-	
-	/**
-	 * Draws an object onto graphical space(context)
-	 * @param g - Graphics context to use
-	 * @param obj - object to draw
-	 */
-	private void renderDynamic(Graphics2D g, GraphicObject obj) {
-	    g.drawImage(obj.getImage(), obj.getX() - player.origin.x, obj.getY(), this);
-	    //g.drawRect(obj.getX() - player.origin.x, obj.getY(), obj.getImage().getWidth(), obj.getImage().getHeight());    //DEBUG
-	}
-	
-	/**
+    
+    /**
      * Draws an object onto graphical space(context)
      * @param g - Graphics context to use
      * @param obj - object to draw
      */
-    private void renderStatic(Graphics2D g, GraphicObject obj) {
-        g.drawImage(obj.getImage(), obj.getX(), obj.getY(), this);
-    }
-    
     private void render(Graphics2D g, GraphicObject obj) {
         g.drawImage(obj.getImage(), obj.getX() - (obj.isStatic() ? 0 : player.origin.x), obj.getY(), this);
     }
@@ -79,7 +65,7 @@ public class View extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable model, Object arg) {
-		dynamicRenderedObjects = ((Model) model).getDynamicRenderedObjects();
+		dynamicRenderedObjects = ((Model) model).getAliveObjects();
 		repaint();
 	}
 	
