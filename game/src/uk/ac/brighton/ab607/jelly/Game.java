@@ -8,6 +8,7 @@ import java.util.HashMap;
 import uk.ac.brighton.ab607.jelly.debug.Debug;
 import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
 import uk.ac.brighton.ab607.jelly.gameobject.Player;
+import uk.ac.brighton.ab607.jelly.gameobject.Powerup;
 import uk.ac.brighton.ab607.jelly.global.Global;
 import uk.ac.brighton.ab607.jelly.io.KeyInput;
 import uk.ac.brighton.ab607.jelly.io.KeyInput.GameEvent;
@@ -78,6 +79,12 @@ public class Game implements Runnable {
                         stopGame();
                     }
 				}
+				
+				for (Powerup p : level.powerups) {
+                    if (player.isColliding(p)) {
+                        p.setActive(true);
+                    }
+                }
 
 				
 				if (player.isJumping())

@@ -34,6 +34,11 @@ public abstract class GameObject extends GraphicObject {
     }
     
     @Override
+    public boolean isStatic() {
+        return false;
+    }
+    
+    @Override
     public BufferedImage getImage() {
         return dir > 0 ? animation[animationIndex] : GraphicUtils.flipImage(animation[animationIndex]);
     }
@@ -76,7 +81,7 @@ public abstract class GameObject extends GraphicObject {
      */
     public void moveX(int dir) {
         this.dir = dir;
-        if (!(getX() == 0 && dir < 0))
+        if (!(super.getX() == 0 && dir < 0))
             updateXY(dir, 0);
     }
     

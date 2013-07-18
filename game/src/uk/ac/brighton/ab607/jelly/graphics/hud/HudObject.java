@@ -32,6 +32,11 @@ public abstract class HudObject extends GraphicObject {
         return image;
     }
     
+    @Override
+    public boolean isStatic() {
+        return true;
+    }
+    
     /**
      * Can be used to retrieve info about changes
      * of this object

@@ -41,14 +41,14 @@ public class View extends JFrame implements Observer {
 	 */
 	private void renderPicture(Graphics2D g) {		
 	    for (GraphicObject obj : hudObjects) {
-	        renderStatic(g, obj);
+	        render(g, obj);
         }
 	       
 		for (GraphicObject obj : dynamicRenderedObjects) {
-		    renderDynamic(g, obj);
+		    render(g, obj);
 		}
 		
-		renderDynamic(g, player);
+		render(g, player);
 	}
 	
 	/**
@@ -68,6 +68,10 @@ public class View extends JFrame implements Observer {
      */
     private void renderStatic(Graphics2D g, GraphicObject obj) {
         g.drawImage(obj.getImage(), obj.getX(), obj.getY(), this);
+    }
+    
+    private void render(Graphics2D g, GraphicObject obj) {
+        g.drawImage(obj.getImage(), obj.getX() - (obj.isStatic() ? 0 : player.origin.x), obj.getY(), this);
     }
 	
 	/**

@@ -11,6 +11,7 @@ import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
 import uk.ac.brighton.ab607.jelly.gameobject.Platform;
 import uk.ac.brighton.ab607.jelly.gameobject.Platform.PlatformType;
 import uk.ac.brighton.ab607.jelly.gameobject.Portal;
+import uk.ac.brighton.ab607.jelly.gameobject.Powerup;
 import uk.ac.brighton.ab607.jelly.io.LevelReader;
 
 /**
@@ -50,6 +51,7 @@ public class GameLevel {
 	public final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	public final ArrayList<Platform> platforms = new ArrayList<Platform>();
 	public final ArrayList<Portal> portals = new ArrayList<Portal>();
+	public final ArrayList<Powerup> powerups = new ArrayList<Powerup>();
 	
 	/**
 	 * Constructs and completely populates new level
@@ -88,6 +90,7 @@ public class GameLevel {
 	    gameObjects.addAll(enemies);
 	    gameObjects.addAll(platforms);
 	    gameObjects.addAll(portals);
+	    gameObjects.addAll(powerups);
 	}
 	
 	private void createGameObject(char code, int line, int position) {
@@ -109,6 +112,10 @@ public class GameLevel {
 	            
 	        case Portal.ID:
 	            portals.add(new Portal(x, y));
+	            break;
+	            
+	        case Powerup.ID:
+	            powerups.add(new Powerup(x, y));
 	            break;
 	           
             default: 

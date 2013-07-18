@@ -57,4 +57,10 @@ public abstract class GraphicObject {
 	 * @return - image of this object
 	 */
 	public abstract BufferedImage getImage();
+	
+	/**
+	 * @return - true if object's position is relative to the screen,
+	 * false if object's position is dynamic
+	 */
+	public abstract boolean isStatic();
 }
