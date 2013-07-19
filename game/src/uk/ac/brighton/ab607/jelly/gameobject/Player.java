@@ -60,6 +60,6 @@ public class Player extends GameObject {
     public void reset() {
         resetPosition();
         this.origin.x = 0;
-        setAlive();
+        setAlive(true);
     }
 }

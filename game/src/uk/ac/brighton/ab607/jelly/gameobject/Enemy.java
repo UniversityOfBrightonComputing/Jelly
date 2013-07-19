@@ -1,11 +1,15 @@
 package uk.ac.brighton.ab607.jelly.gameobject;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import uk.ac.brighton.ab607.jelly.GameResources;
 
 public class Enemy extends GameObject {
     public static final char ID = '3';
+    
+    private int moveTimer = 0;
+    
     public enum EnemyType {
         FLY(GameResources.IMG_ENEMY);
         
@@ -20,4 +24,16 @@ public class Enemy extends GameObject {
         super(x, y, type.image);
     }
 
+    //will do atm
+    public void moveX() {
+        if (moveTimer < 175)
+            moveX(1);
+        else
+            moveX(-1);
+        
+        moveTimer++;
+        
+        if (moveTimer == 350)
+            moveTimer = 0;
+    }
 }

@@ -28,7 +28,7 @@ public class HUD implements Observer {
     private HudText levelText = new HudText(0.05*W, 0.15*H, "");
     private HudText scoreText = new HudText(0.9*W, 0.1*H, "");
     private HudText endGameText = new HudText(0.5*W, 0.5*H, "");
-    private HudText debug = new HudText(0.75*W, 0.15*H, "");
+    private HudText debug = new HudText(0.6*W, 0.15*H, "");
     
     public HUD() {
         hudObjects.add(background);

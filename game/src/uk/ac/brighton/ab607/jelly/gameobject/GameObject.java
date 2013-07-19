@@ -49,13 +49,9 @@ public abstract class GameObject extends GraphicObject {
         if (animationIndex == animation.length)
             animationIndex = 0;
     }
-    
-    public void setDead() {
-        alive = false;
-    }
-    
-    public void setAlive() {
-        alive = true;
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
     
     /**

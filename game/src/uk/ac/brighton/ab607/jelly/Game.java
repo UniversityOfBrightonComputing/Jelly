@@ -2,10 +2,10 @@ package uk.ac.brighton.ab607.jelly;
 
 import static uk.ac.brighton.ab607.jelly.global.Global.W;
 
-import java.awt.Point;
 import java.util.HashMap;
 
 import uk.ac.brighton.ab607.jelly.debug.Debug;
+import uk.ac.brighton.ab607.jelly.gameobject.Enemy;
 import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
 import uk.ac.brighton.ab607.jelly.gameobject.Player;
 import uk.ac.brighton.ab607.jelly.gameobject.Powerup;
@@ -27,9 +27,6 @@ public class Game implements Runnable {
 	private Player player;
 	private GameObject[] platforms;
 	
-	//TO DO integrate origin into player, so when player moves, origin moves too
-	private Point origin;
-	
 	private boolean running = true;
 	private boolean levelRunning = true;
 	
@@ -37,7 +34,6 @@ public class Game implements Runnable {
 		this.model = model;
 		this.controller = controller;
         player = model.player;
-        origin = player.origin;
 	}
 	
 	/**
@@ -62,9 +58,12 @@ public class Game implements Runnable {
 			     
 				PhysicsEngine.Gravity.pull(player, platforms);
 				
-				for (GameObject enemy : level.enemies) {
+				for (Enemy enemy : level.enemies) {
+				    PhysicsEngine.Gravity.pull(enemy, platforms);
+				    enemy.moveX();
+				    
                     if (player.isColliding(enemy)) {
-                        player.setDead();
+                        player.setAlive(false);
                         break;
                     }
                 }
@@ -96,7 +95,7 @@ public class Game implements Runnable {
 				
 				for (GameObject coin : level.coins) {
 					if (player.isColliding(coin) && coin.isAlive()) {
-					    coin.setDead();
+					    coin.setAlive(false);
 					    player.addToScore(Global.SCORE_COIN);
 					}
 				}
@@ -108,7 +107,7 @@ public class Game implements Runnable {
 				
 				long finish = System.currentTimeMillis()-start;
 				if (finish > 0)
-				    Debug.msg("Performance report: " + finish + " ms");
+				    Debug.msg("Lvl cycle exec (only if > 0): " + finish + " ms");
 			
 				sleep();
 			}
@@ -145,7 +144,7 @@ public class Game implements Runnable {
 	
 	public void updateOrigin(int dist) {
         if (player.getX() >= 0.6*W && player.getX() <= level.length - 0.4*W)
-            origin.x += dist;
+            player.origin.x += dist;
     }
 	
 	/**
