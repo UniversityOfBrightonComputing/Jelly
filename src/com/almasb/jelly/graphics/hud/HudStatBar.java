@@ -14,18 +14,18 @@ public class HudStatBar extends HudObject {
         this.original = image;
         this.times = times;
     }
-    
+
     public HudStatBar(double x, double y, BufferedImage image, int times) {
-        this((int)x, (int)y, image, times);
+        this((int) x, (int) y, image, times);
     }
-    
+
     public void setTimes(int times) {
         if (this.times != times) {
             this.times = times;
             changed = true;
         }
     }
-    
+
     @Override
     public boolean hasChanged() {
         return changed;
