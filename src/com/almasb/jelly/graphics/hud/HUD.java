@@ -1,15 +1,15 @@
-package uk.ac.brighton.ab607.jelly.graphics.hud;
+package com.almasb.jelly.graphics.hud;
 
-import static uk.ac.brighton.ab607.jelly.GameResources.*;
-import static uk.ac.brighton.ab607.jelly.global.Global.*;
+import static com.almasb.jelly.GameResources.*;
+import static com.almasb.jelly.global.Global.*;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import uk.ac.brighton.ab607.jelly.Model;
-import uk.ac.brighton.ab607.jelly.debug.Debug;
-import uk.ac.brighton.ab607.jelly.gameobject.Player;
+import com.almasb.jelly.Model;
+import com.almasb.jelly.debug.Debug;
+import com.almasb.jelly.gameobject.Player;
 
 /**
  * A set of HudObjects

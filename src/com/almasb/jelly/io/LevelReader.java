@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly.io;
+package com.almasb.jelly.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import uk.ac.brighton.ab607.jelly.global.Global;
+import com.almasb.jelly.global.Global;
 
 /**
  * Accesses a level text file

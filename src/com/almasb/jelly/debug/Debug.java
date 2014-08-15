@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly.debug;
+package com.almasb.jelly.debug;
 
 public class Debug {
     private static String lastMessage = "";

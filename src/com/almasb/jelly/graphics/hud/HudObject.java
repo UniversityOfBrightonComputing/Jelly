@@ -1,8 +1,8 @@
-package uk.ac.brighton.ab607.jelly.graphics.hud;
+package com.almasb.jelly.graphics.hud;
 
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
+import com.almasb.jelly.graphics.GraphicObject;
 
 /**
  * A graphic object for game interface that

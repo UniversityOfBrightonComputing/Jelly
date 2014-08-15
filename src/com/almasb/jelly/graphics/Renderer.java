@@ -1,11 +1,11 @@
-package uk.ac.brighton.ab607.jelly.graphics;
+package com.almasb.jelly.graphics;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.GameResources;
+import com.almasb.jelly.GameResources;
 
 public class Renderer {
 	public static BufferedImage createGraphics(String text) {

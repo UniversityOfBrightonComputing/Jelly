@@ -1,7 +1,7 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
-import uk.ac.brighton.ab607.jelly.graphics.hud.HUD;
-import uk.ac.brighton.ab607.jelly.io.KeyInput;
+import com.almasb.jelly.graphics.hud.HUD;
+import com.almasb.jelly.io.KeyInput;
 
 /**
  * Entry point of the game

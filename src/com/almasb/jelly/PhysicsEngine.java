@@ -1,7 +1,8 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
-import static uk.ac.brighton.ab607.jelly.global.Global.SPRITE_SIZE;
-import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
+import static com.almasb.jelly.global.Global.SPRITE_SIZE;
+
+import com.almasb.jelly.gameobject.GameObject;
 
 /**
  * Does all the checking required for collisions

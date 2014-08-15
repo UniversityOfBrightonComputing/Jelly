@@ -1,6 +1,6 @@
-package uk.ac.brighton.ab607.jelly.test;
+package com.almasb.jelly.test;
 
-import uk.ac.brighton.ab607.jelly.io.Out;
+import com.almasb.jelly.io.Out;
 
 public class Test
 {

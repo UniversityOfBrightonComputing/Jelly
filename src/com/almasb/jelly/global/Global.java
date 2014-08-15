@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly.global;
+package com.almasb.jelly.global;
 
 import java.awt.Point;
 

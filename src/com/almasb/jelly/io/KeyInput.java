@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly.io;
+package com.almasb.jelly.io;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

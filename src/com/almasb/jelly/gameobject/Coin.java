@@ -1,8 +1,8 @@
-package uk.ac.brighton.ab607.jelly.gameobject;
+package com.almasb.jelly.gameobject;
 
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.GameResources;
+import com.almasb.jelly.GameResources;
 
 public class Coin extends GameObject {
     public static final char ID = '2';

@@ -1,6 +1,6 @@
-package uk.ac.brighton.ab607.jelly.graphics.hud;
+package com.almasb.jelly.graphics.hud;
 
-import uk.ac.brighton.ab607.jelly.graphics.Renderer;
+import com.almasb.jelly.graphics.Renderer;
 
 public class HudText extends HudObject {
     private boolean changed = false;

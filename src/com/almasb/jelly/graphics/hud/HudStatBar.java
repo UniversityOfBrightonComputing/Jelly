@@ -1,8 +1,8 @@
-package uk.ac.brighton.ab607.jelly.graphics.hud;
+package com.almasb.jelly.graphics.hud;
 
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.graphics.Renderer;
+import com.almasb.jelly.graphics.Renderer;
 
 public class HudStatBar extends HudObject {
     private boolean changed = false;

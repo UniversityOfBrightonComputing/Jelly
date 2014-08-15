@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,10 +9,11 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
-import uk.ac.brighton.ab607.jelly.gameobject.Player;
-import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.hud.HudObject;
-import static uk.ac.brighton.ab607.jelly.global.Global.*;
+import com.almasb.jelly.gameobject.Player;
+import com.almasb.jelly.graphics.GraphicObject;
+import com.almasb.jelly.graphics.hud.HudObject;
+
+import static com.almasb.jelly.global.Global.*;
 
 /**
  * Displays a graphical view of the game

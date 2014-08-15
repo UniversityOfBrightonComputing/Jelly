@@ -1,18 +1,19 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
 import java.util.ArrayList;
 
-import static uk.ac.brighton.ab607.jelly.global.Global.*;
-import uk.ac.brighton.ab607.jelly.gameobject.Coin;
-import uk.ac.brighton.ab607.jelly.gameobject.Enemy;
-import uk.ac.brighton.ab607.jelly.gameobject.Coin.CoinType;
-import uk.ac.brighton.ab607.jelly.gameobject.Enemy.EnemyType;
-import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
-import uk.ac.brighton.ab607.jelly.gameobject.Platform;
-import uk.ac.brighton.ab607.jelly.gameobject.Platform.PlatformType;
-import uk.ac.brighton.ab607.jelly.gameobject.Portal;
-import uk.ac.brighton.ab607.jelly.gameobject.Powerup;
-import uk.ac.brighton.ab607.jelly.io.LevelReader;
+import com.almasb.jelly.gameobject.Coin;
+import com.almasb.jelly.gameobject.Enemy;
+import com.almasb.jelly.gameobject.GameObject;
+import com.almasb.jelly.gameobject.Platform;
+import com.almasb.jelly.gameobject.Portal;
+import com.almasb.jelly.gameobject.Powerup;
+import com.almasb.jelly.gameobject.Coin.CoinType;
+import com.almasb.jelly.gameobject.Enemy.EnemyType;
+import com.almasb.jelly.gameobject.Platform.PlatformType;
+import com.almasb.jelly.io.LevelReader;
+
+import static com.almasb.jelly.global.Global.*;
 
 /**
  * A level in the game, contains all

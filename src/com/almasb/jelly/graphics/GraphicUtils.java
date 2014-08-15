@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly.graphics;
+package com.almasb.jelly.graphics;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

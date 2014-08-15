@@ -1,9 +1,9 @@
-package uk.ac.brighton.ab607.jelly.gameobject;
+package com.almasb.jelly.gameobject;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.global.Global;
+import com.almasb.jelly.global.Global;
 
 /**
  * The player with all his unique abilities

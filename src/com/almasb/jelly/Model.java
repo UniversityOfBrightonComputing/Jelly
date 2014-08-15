@@ -1,13 +1,13 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
-import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
-import uk.ac.brighton.ab607.jelly.gameobject.Player;
-import uk.ac.brighton.ab607.jelly.global.Global;
-import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.io.KeyInput;
+import com.almasb.jelly.gameobject.GameObject;
+import com.almasb.jelly.gameobject.Player;
+import com.almasb.jelly.global.Global;
+import com.almasb.jelly.graphics.GraphicObject;
+import com.almasb.jelly.io.KeyInput;
 
 /**
  * Static model of the game

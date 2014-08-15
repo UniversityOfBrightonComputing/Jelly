@@ -1,13 +1,15 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import javax.imageio.ImageIO;
 
-import uk.ac.brighton.ab607.jelly.io.Out;
-import static uk.ac.brighton.ab607.jelly.global.Global.PATH_RESOURCES;
+import com.almasb.jelly.io.Out;
+
+import static com.almasb.jelly.global.Global.PATH_RESOURCES;
 
 /**
  * Loads and holds all the game resources

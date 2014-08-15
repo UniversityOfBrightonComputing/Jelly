@@ -1,17 +1,17 @@
-package uk.ac.brighton.ab607.jelly;
+package com.almasb.jelly;
 
-import static uk.ac.brighton.ab607.jelly.global.Global.W;
+import static com.almasb.jelly.global.Global.W;
 
 import java.util.HashMap;
 
-import uk.ac.brighton.ab607.jelly.debug.Debug;
-import uk.ac.brighton.ab607.jelly.gameobject.Enemy;
-import uk.ac.brighton.ab607.jelly.gameobject.GameObject;
-import uk.ac.brighton.ab607.jelly.gameobject.Player;
-import uk.ac.brighton.ab607.jelly.gameobject.Powerup;
-import uk.ac.brighton.ab607.jelly.global.Global;
-import uk.ac.brighton.ab607.jelly.io.KeyInput;
-import uk.ac.brighton.ab607.jelly.io.KeyInput.GameEvent;
+import com.almasb.jelly.debug.Debug;
+import com.almasb.jelly.gameobject.Enemy;
+import com.almasb.jelly.gameobject.GameObject;
+import com.almasb.jelly.gameobject.Player;
+import com.almasb.jelly.gameobject.Powerup;
+import com.almasb.jelly.global.Global;
+import com.almasb.jelly.io.KeyInput;
+import com.almasb.jelly.io.KeyInput.GameEvent;
 
 
 /**

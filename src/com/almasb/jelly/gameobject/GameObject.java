@@ -1,12 +1,12 @@
-package uk.ac.brighton.ab607.jelly.gameobject;
+package com.almasb.jelly.gameobject;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import uk.ac.brighton.ab607.jelly.PhysicsEngine;
-import uk.ac.brighton.ab607.jelly.PhysicsEngine.Side;
-import uk.ac.brighton.ab607.jelly.graphics.GraphicObject;
-import uk.ac.brighton.ab607.jelly.graphics.GraphicUtils;
+import com.almasb.jelly.PhysicsEngine;
+import com.almasb.jelly.PhysicsEngine.Side;
+import com.almasb.jelly.graphics.GraphicObject;
+import com.almasb.jelly.graphics.GraphicUtils;
 
 public abstract class GameObject extends GraphicObject {
     

@@ -1,4 +1,4 @@
-package uk.ac.brighton.ab607.jelly.io;
+package com.almasb.jelly.io;
 
 /**
  * Simple class that wraps up System's output methods
