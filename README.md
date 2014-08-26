@@ -13,5 +13,5 @@ Required:
 
 Commands:
 
-mvn package
-java -cp "lib/*;target/*" com.almasb.jelly.v2.Main
+`mvn package
+`java -cp "lib/*;target/*" com.almasb.jelly.v2.Main
