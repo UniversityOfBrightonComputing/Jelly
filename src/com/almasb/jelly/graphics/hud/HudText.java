@@ -5,21 +5,21 @@ import com.almasb.jelly.graphics.Renderer;
 public class HudText extends HudObject {
     private boolean changed = false;
     private String text = "";
-    
-	public HudText(int x, int y, String text) {
-		super(x, y, Renderer.createGraphics(text));
-	}
-	
-	public HudText(double x, double y, String text) {
-        this((int)x, (int)y, text);
+
+    public HudText(int x, int y, String text) {
+        super(x, y, Renderer.createGraphics(text));
     }
-	
-	public void setText(String text) {
-	    if (!this.text.equals(text)) {
-	        this.text = text;
-	        changed = true;
-	    }
-	}
+
+    public HudText(double x, double y, String text) {
+        this((int) x, (int) y, text);
+    }
+
+    public void setText(String text) {
+        if (!this.text.equals(text)) {
+            this.text = text;
+            changed = true;
+        }
+    }
 
     @Override
     public boolean hasChanged() {
@@ -29,7 +29,7 @@ public class HudText extends HudObject {
     @Override
     public void updateGraphics() {
         if (hasChanged()) {
-            this.image = Renderer.createGraphics(text);  
+            this.image = Renderer.createGraphics(text);
             changed = false;
         }
     }
