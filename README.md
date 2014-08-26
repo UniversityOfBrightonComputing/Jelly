@@ -9,4 +9,6 @@ Compile
 
 Required:
 - JDK 1.8+
-- almasb-lib.jar 1.1+ (my private library is not ready for release yet, coming soon)
+- almasb-lib.jar 1.1+ (Please read LICENSE file to see where you can use it)
+
+
