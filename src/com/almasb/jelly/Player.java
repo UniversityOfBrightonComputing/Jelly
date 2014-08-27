@@ -1,4 +1,4 @@
-package com.almasb.jelly.v2;
+package com.almasb.jelly;
 
 public class Player extends JellyGameObject {
 

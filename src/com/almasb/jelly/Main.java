@@ -1,9 +1,15 @@
-package com.almasb.jelly.v2;
+package com.almasb.jelly;
 
 import com.almasb.java.game.Physics;
 import com.almasb.java.io.Resources;
-import com.almasb.jelly.R;
 
+/**
+ * Entry point to the game
+ *
+ * @author Almas Baimagambetov (ab607@uni.brighton.ac.uk)
+ * @version 1.0
+ *
+ */
 public class Main {
     public static void main(String[] args) {
         // load resources
@@ -16,7 +22,6 @@ public class Main {
 
         GUI view = new GUI();
         Game game = new Game(view);
-
 
         game.start();
     }

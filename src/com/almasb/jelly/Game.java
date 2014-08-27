@@ -1,4 +1,4 @@
-package com.almasb.jelly.v2;
+package com.almasb.jelly;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -8,10 +8,15 @@ import com.almasb.java.game.GameView;
 import com.almasb.java.game.Physics;
 import com.almasb.java.game.UserEvent;
 import com.almasb.java.io.ResourceManager;
-import com.almasb.java.io.Resources;
-import com.almasb.jelly.Const;
-import com.almasb.jelly.v2.JellyGameObject.Type;
+import com.almasb.jelly.JellyGameObject.Type;
 
+/**
+ * The model of the game
+ *
+ * @author Almas Baimagambetov (ab607@uni.brighton.ac.uk)
+ * @version 1.0
+ *
+ */
 public class Game extends GameModel {
 
     private Player player = new Player(40, 100);

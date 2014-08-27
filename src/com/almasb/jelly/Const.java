@@ -1,5 +1,12 @@
 package com.almasb.jelly;
 
+/**
+ * Game constants
+ *
+ * @author Almas Baimagambetov (ab607@uni.brighton.ac.uk)
+ * @version 1.0
+ *
+ */
 public final class Const {
 
     public static final char ID_PLATFORM = '1';

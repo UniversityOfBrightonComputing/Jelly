@@ -1,12 +1,16 @@
-package com.almasb.jelly.v2;
+package com.almasb.jelly;
 
 import com.almasb.common.graphics.Color;
 import com.almasb.common.graphics.GraphicsContext;
-import com.almasb.common.util.Out;
 import com.almasb.java.game.GameObject;
-import com.almasb.jelly.Const;
-import com.almasb.jelly.R;
 
+/**
+ * A game object in the Jelly world
+ *
+ * @author Almas Baimagambetov (ab607@uni.brighton.ac.uk)
+ * @version 1.0
+ *
+ */
 public class JellyGameObject extends GameObject {
 
     public enum Type {
