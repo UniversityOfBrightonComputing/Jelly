@@ -1,26 +1,23 @@
-package com.almasb.jelly;
+package com.almasb.jelly.v2;
 
-import com.almasb.jelly.graphics.hud.HUD;
-import com.almasb.jelly.io.KeyInput;
+import com.almasb.java.game.Physics;
+import com.almasb.java.io.Resources;
+import com.almasb.jelly.R;
 
-/**
- * Entry point of the game Exists just to initialise game's core classes and to
- * start the game
- * 
- * @author Almas
- */
 public class Main {
     public static void main(String[] args) {
-        KeyInput keyboard = new KeyInput();
+        // load resources
+        Resources.init(R.drawable.class, R.raw.class);
 
-        Model model = new Model(keyboard);
-        HUD hud = new HUD();
+        // set up world's physics
+        Physics.ON = true;
+        Physics.GRAVITY_ON = true;
+        Physics.GROUND = 720;
 
-        View view = new View(model.player, hud.hudObjects);
+        GUI view = new GUI();
+        Game game = new Game(view);
 
-        view.addKeyListener(keyboard);
 
-        model.addObserver(view);
-        model.addObserver(hud);
+        game.start();
     }
 }

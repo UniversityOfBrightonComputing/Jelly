@@ -1,174 +1,84 @@
-package com.almasb.jelly;
+package com.almasb.jelly.v2;
 
-import static com.almasb.jelly.global.Global.W;
+import java.awt.event.KeyEvent;
+import java.util.List;
 
-import java.util.HashMap;
+import com.almasb.java.game.GameModel;
+import com.almasb.java.game.GameView;
+import com.almasb.java.game.Physics;
+import com.almasb.java.game.UserEvent;
+import com.almasb.java.io.ResourceManager;
+import com.almasb.java.io.Resources;
+import com.almasb.jelly.Const;
+import com.almasb.jelly.v2.JellyGameObject.Type;
 
-import com.almasb.jelly.gameobject.Enemy;
-import com.almasb.jelly.gameobject.GameObject;
-import com.almasb.jelly.gameobject.Player;
-import com.almasb.jelly.gameobject.Powerup;
-import com.almasb.jelly.global.Global;
-import com.almasb.jelly.io.KeyInput;
-import com.almasb.jelly.io.KeyInput.GameEvent;
+public class Game extends GameModel {
 
-/**
- * A dynamic representation of the game
- *
- * @author - Almas
- * @version - 0.8
- */
-public class Game implements Runnable {
-    private Model model;
-    private KeyInput controller;
+    private Player player = new Player(40, 100);
 
-    private GameLevel level;
-    private Player player;
-    private GameObject[] platforms;
+    public Game(GameView view) {
+        super(view);
 
-    private boolean running = true;
-    private boolean levelRunning = true;
+        // populate world
+        List<String> levelData = ResourceManager.loadText("levels/level1.txt");
+        for (int i = 0; i < 3; i++) {
+            String line = levelData.get(i);
+            for (int j = 0; j < line.length(); j++) {
+                char id = line.charAt(j);
 
-    public Game(Model model, KeyInput controller) {
-        this.model = model;
-        this.controller = controller;
-        player = model.player;
-    }
+                int x = j*(Const.CELL_SIZE);
+                int y = Physics.GROUND - (3-i)*(Const.CELL_SIZE);
 
-    /**
-     * A representation of the main game loop If it stops, the game stops,
-     * program exits
-     **/
-    @Override
-    public void run() {
-        while (running) {
-            level = model.newLevel();
-            player.reset();
-
-            platforms = new GameObject[level.platforms.size()];
-            level.platforms.toArray(platforms);
-
-            levelRunning = true;
-
-            while (levelRunning) {
-                long start = System.currentTimeMillis();
-
-                PhysicsEngine.Gravity.pull(player, platforms);
-
-                for (Enemy enemy : level.enemies) {
-                    PhysicsEngine.Gravity.pull(enemy, platforms);
-                    enemy.moveX();
-
-                    if (player.isColliding(enemy)) {
-                        player.setAlive(false);
+                switch (id) {
+                    case Const.ID_COIN:
+                        addGameObject(new JellyGameObject(Type.COIN, x, y));
                         break;
-                    }
+                    case Const.ID_ENEMY:
+                        addGameObject(new JellyGameObject(Type.ENEMY, x, y));
+                        break;
+                    case Const.ID_PLATFORM:
+                        addGameObject(new JellyGameObject(Type.PLATFORM, x, y));
+                        break;
+                    case Const.ID_PORTAL:
+                        addGameObject(new JellyGameObject(Type.PORTAL, x, y));
+                        break;
+                    case Const.ID_POWERUP:
+                        addGameObject(new JellyGameObject(Type.POWERUP, x, y));
+                        break;
+                    default:
+                        break;
                 }
-
-                if (!player.isAlive()) {
-                    if (player.getLives() > 0) {
-                        player.addToLives(-1);
-                        player.reset();
-                    }
-                    else {
-                        stopLevel();
-                        stopGame();
-                    }
-                }
-
-                for (Powerup p : level.powerups) {
-                    if (player.isColliding(p)) {
-                        p.setActive(true);
-                    }
-                }
-
-                if (player.isJumping())
-                    player.jump(platforms);
-
-                if (player.isColliding(level.portals.get(0))) {
-                    stopLevel();
-                }
-
-                for (GameObject coin : level.coins) {
-                    if (player.isColliding(coin) && coin.isAlive()) {
-                        coin.setAlive(false);
-                        player.addToScore(Global.SCORE_COIN);
-                    }
-                }
-
-                handleGameEvents();
-
-                model.modelChanged();
-
-                long finish = System.currentTimeMillis() - start;
-
-                sleep();
             }
         }
+
+        addGameObject(player);
+
+        // add user events
+        this.addUserEvent(KeyEvent.VK_UP, new UserEvent("jump") {
+            @Override
+            public void handle() {
+                player.jump();
+            }
+        });
+
+        this.addUserEvent(KeyEvent.VK_LEFT, new UserEvent("left") {
+            @Override
+            public void handle() {
+                player.moveX(-1);
+            }
+        });
+
+        this.addUserEvent(KeyEvent.VK_RIGHT, new UserEvent("right") {
+            @Override
+            public void handle() {
+                player.moveX(1);
+            }
+        });
     }
 
-    /**
-     * Game events handler, will do for the moment
-     */
-    private void handleGameEvents() {
-        HashMap<GameEvent, Boolean> events = controller.getEvents();
+    @Override
+    public void onUpdate() {
+        // TODO Auto-generated method stub
 
-        for (GameEvent currentEvent : events.keySet())
-            if (events.get(currentEvent))
-                switch (currentEvent) {
-                    case NONE:
-                        break;
-
-                    case PLAYER_JUMP:
-                        if (player.isOnPlatform(platforms)
-                                && !player.isBelowPlatform(platforms))
-                            player.prepareJump();
-                        break;
-
-                    case PLAYER_MOVE_LEFT:
-                        updateOrigin(-player.moveX(-4, platforms));
-                        break;
-
-                    case PLAYER_MOVE_RIGHT:
-                        updateOrigin(player.moveX(4, platforms));
-                        break;
-                }
-    }
-
-    public void updateOrigin(int dist) {
-        if (player.getX() >= 0.6 * W && player.getX() <= level.length - 0.4 * W)
-            player.origin.x += dist;
-    }
-
-    /**
-     * Stops the game from executing for 17 ms, can be made generic so gets
-     * refresh rate and sleeps 1000/refresh rate
-     */
-    public void sleep() {
-        try {
-            Thread.sleep(17);
-        }
-        catch (InterruptedException ie) {
-            ie.printStackTrace();
-        }
-        ;
-    }
-
-    public boolean isRunning() {
-        return running;
-    }
-
-    /**
-     * Stops current level
-     */
-    public void stopLevel() {
-        levelRunning = false;
-    }
-
-    /**
-     * Stops the main game loop, resulting in program ending
-     **/
-    public void stopGame() {
-        running = false;
     }
 }
