@@ -84,7 +84,7 @@
       </resource>
     </resources>
   </build>
-  <dependencies>
+  <!--  <dependencies>
     <dependency>
         <groupId>com.almasb</groupId>
         <artifactId>almasb-lib</artifactId>
@@ -92,5 +92,5 @@
         <scope>system</scope>
         <systemPath>${basedir}/lib/almasb-lib1.1.jar</systemPath>
     </dependency>
-  </dependencies>
+  </dependencies> -->
 </project>
