@@ -2,9 +2,14 @@ package com.almasb.jelly;
 
 import java.util.List;
 
+import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -81,11 +86,25 @@ public class GUI extends FXGameWindow {
         camera.translateYProperty().bind(player.translateYProperty().subtract(player.translateYProperty()));
 
         // add a text score
-        score.translateXProperty().bind(player.translateXProperty().add(540));
+        //score.translateXProperty().bind(player.translateXProperty().add(540));
         score.setTranslateY(100);
+        score.setTranslateX(100);
+        //score.setTextOrigin(VPos.TOP);
 
-        root.getChildren().add(score);
+        //VBox vBox = new VBox();
+        //vBox.getChildren().add(score);
+        Group parent = new Group();
+        SubScene subScene = new SubScene(parent, 200, 200);
 
+        parent.getChildren().add(score);
+
+        subScene.translateXProperty().bind(player.translateXProperty());
+        //subScene.translateYProperty().bind(player.translateYProperty());
+
+        root.getChildren().add(subScene);
+        //root.translateXProperty().bind(camera.translateXProperty());
+        //root.translateYProperty().bind(camera.translateYProperty());
+        //root.relocate(camera.getTranslateX(), camera.getTranslateY());
 
 
         score.textProperty().bind(player.scoreProperty().asString());
@@ -127,6 +146,8 @@ public class GUI extends FXGameWindow {
 
     @Override
     protected void onUpdate(long now) {
-        Out.d("playerX", player.getTranslateX() + "");
+
+        //root.relocate(camera.getTranslateX(), camera.getTranslateY());
+        //Out.d("playerX", player.getTranslateX() + "");
     }
 }
