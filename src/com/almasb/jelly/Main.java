@@ -25,6 +25,6 @@ public class Main {
 
         game.start();*/
 
-        new GUI();
+        new GUI().init();
     }
 }
