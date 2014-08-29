@@ -1,5 +1,9 @@
 package com.almasb.jelly;
 
+import com.almasb.java.io.ResourceManager;
+
+import javafx.scene.image.Image;
+
 /**
  * Android compatibility
  *
@@ -19,5 +23,20 @@ public class R {
 
     public static final class raw {
 
+    }
+
+    private static final Image[] images = new Image[10];
+
+    public static Image getImage(int resID) {
+        return images[resID];
+    }
+
+    static {
+        images[drawable.platformup] = ResourceManager.loadFXImage("platformup.png");
+        images[drawable.powerup] = ResourceManager.loadFXImage("powerup.png");
+        images[drawable.enemy] = ResourceManager.loadFXImage("enemy.png");
+        images[drawable.coin] = ResourceManager.loadFXImage("coin.png");
+        images[drawable.background] = ResourceManager.loadFXImage("bg.png");
+        images[drawable.player] = ResourceManager.loadFXImage("player.png");
     }
 }
