@@ -20,11 +20,6 @@ public class Main {
         Physics.GRAVITY_ON = true;
         Physics.GROUND = 720;
 
-        /*GUI view = new GUI();
-        Game game = new Game(view);
-
-        game.start();*/
-
         new GUI().init();
     }
 }

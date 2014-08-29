@@ -5,8 +5,10 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import com.almasb.common.util.Out;
 import com.almasb.java.game.GameObject;
 import com.almasb.java.game.Physics;
 import com.almasb.java.game.UserEvent;
@@ -23,6 +25,7 @@ import com.almasb.jelly.JellyGameObject.Type;
  */
 public class GUI extends FXGameWindow {
 
+    private Text score = new Text();
     private Player player = new Player(40, 100);
 
     public GUI() {
@@ -76,6 +79,16 @@ public class GUI extends FXGameWindow {
 
         camera.translateXProperty().bind(player.translateXProperty().subtract(640));
         camera.translateYProperty().bind(player.translateYProperty().subtract(player.translateYProperty()));
+
+        // add a text score
+        score.translateXProperty().bind(player.translateXProperty().add(540));
+        score.setTranslateY(100);
+
+        root.getChildren().add(score);
+
+
+
+        score.textProperty().bind(player.scoreProperty().asString());
     }
 
     @Override
@@ -114,6 +127,6 @@ public class GUI extends FXGameWindow {
 
     @Override
     protected void onUpdate(long now) {
-        // TODO Auto-generated method stub
+        Out.d("playerX", player.getTranslateX() + "");
     }
 }

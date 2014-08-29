@@ -1,5 +1,7 @@
 package com.almasb.jelly;
 
+import javafx.scene.image.ImageView;
+
 import com.almasb.common.graphics.Color;
 import com.almasb.common.graphics.GraphicsContext;
 import com.almasb.common.graphics.Point2D;
@@ -14,6 +16,8 @@ import com.almasb.java.game.GameObject;
  *
  */
 public class JellyGameObject extends GameObject {
+
+    private ImageView sprite = new ImageView();
 
     public enum Type {
         PLAYER(-1), PLATFORM(1), COIN(2), ENEMY(3), POWERUP(4), PORTAL(9);
@@ -31,19 +35,30 @@ public class JellyGameObject extends GameObject {
         this.type = t;
         switch (type) {
             case PLAYER:
+                sprite.setImage(R.getImage(R.drawable.player));
                 break;
             case ENEMY:
+                sprite.setImage(R.getImage(R.drawable.enemy));
                 break;
 
             case PLATFORM:
+                sprite.setImage(R.getImage(R.drawable.platformup));
+                setMovable(false);
+                break;
             case PORTAL:
             case COIN:
+                sprite.setImage(R.getImage(R.drawable.coin));
+                setMovable(false);
+                break;
             case POWERUP:
+                sprite.setImage(R.getImage(R.drawable.powerup));
                 setMovable(false);
                 break;
             default:
                 break;
         }
+
+        getChildren().add(sprite);
     }
 
     public Type getType() {
@@ -71,9 +86,16 @@ public class JellyGameObject extends GameObject {
     }
 
     @Override
-    protected boolean onCollide(GameObject other, Collision collision) {
+    protected void onCollide(GameObject other, Collision collision) {
+        JellyGameObject collider = (JellyGameObject) other;
+
         switch (type) {
             case COIN:
+                if (collider.getType() == Type.PLAYER) {
+                    this.setAlive(false);
+                    this.setVisible(false);
+                    ((Player)collider).addScore(Const.SCORE_COIN);
+                }
                 break;
             case ENEMY:
                 break;
@@ -88,46 +110,10 @@ public class JellyGameObject extends GameObject {
             default:
                 break;
         }
-
-        return false;
     }
 
     @Override
     protected void onDraw(GraphicsContext gContext) {
-        int tmpX = getX() - Camera2D.getInstance().getX();
-        int tmpY = getY() - Camera2D.getInstance().getY();
-
-        //if (!Camera2D.getInstance().getArea().contains(new Point2D(tmpX, tmpY))) return;
-
-
-        switch (type) {
-            case COIN:
-                gContext.drawImage(R.drawable.coin, tmpX, tmpY);
-                //break;
-                return;
-            case ENEMY:
-                gContext.drawImage(R.drawable.enemy, tmpX, tmpY);
-                //break;
-                return;
-            case PLATFORM:
-                gContext.drawImage(R.drawable.platformup, tmpX, tmpY);
-                return;
-                //break;
-            case PLAYER:
-                gContext.drawImage(R.drawable.player, tmpX, tmpY);
-                return;
-                //break;
-            case PORTAL:
-                break;
-            case POWERUP:
-                gContext.drawImage(R.drawable.powerup, tmpX, tmpY);
-                return;
-                //break;
-            default:
-                break;
-        }
-
-        gContext.setColor(Color.RED);
-        gContext.drawRect(tmpX, tmpY, getWidth(), getHeight());
+        // not used in FX
     }
 }
