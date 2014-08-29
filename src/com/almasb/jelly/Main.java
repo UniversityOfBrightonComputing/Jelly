@@ -13,16 +13,18 @@ import com.almasb.java.io.Resources;
 public class Main {
     public static void main(String[] args) {
         // load resources
-        Resources.init(R.drawable.class, R.raw.class);
+        //Resources.init(R.drawable.class, R.raw.class);
 
         // set up world's physics
         Physics.ON = true;
         Physics.GRAVITY_ON = true;
         Physics.GROUND = 720;
 
-        GUI view = new GUI();
+        /*GUI view = new GUI();
         Game game = new Game(view);
 
-        game.start();
+        game.start();*/
+
+        new GUI();
     }
 }

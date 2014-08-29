@@ -3,6 +3,7 @@ package com.almasb.jelly;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import com.almasb.java.game.Camera2D;
 import com.almasb.java.game.GameModel;
 import com.almasb.java.game.GameView;
 import com.almasb.java.game.Physics;
@@ -17,15 +18,14 @@ import com.almasb.jelly.JellyGameObject.Type;
  * @version 1.0
  *
  */
-public class Game extends GameModel {
+public class Game {
 
     private Player player = new Player(40, 100);
 
-    public Game(GameView view) {
-        super(view);
+    public Game() {
 
         // populate world
-        List<String> levelData = ResourceManager.loadText("levels/level1.txt");
+        /*List<String> levelData = ResourceManager.loadText("levels/level1.txt");
         for (int i = 0; i < 3; i++) {
             String line = levelData.get(i);
             for (int j = 0; j < line.length(); j++) {
@@ -56,10 +56,25 @@ public class Game extends GameModel {
             }
         }
 
-        addGameObject(player);
+        addGameObject(player);*/
+
+        /*Camera2D camera = Camera2D.getInstance();
+        camera.setWidth(1280);
+        camera.setHeight(720);
+        camera.setOffsetX(640);
+        camera.lockY();
+        //camera.setOffsetY(720);
+        camera.follow(player);*/
+
+        /* player.positionProperty().addListener(newValue -> {
+            //System.out.println("hi");
+            if (view.getGraphicsContext() != null)
+                view.getGraphicsContext().setRenderXY((int)newValue.getX() - 640, (int)newValue.getY() - 320);
+            //view.getGraphicsContext().setRenderXY(0, 0);
+        });*/
 
         // add user events
-        this.addUserEvent(KeyEvent.VK_UP, new UserEvent("jump") {
+        /*this.addUserEvent(KeyEvent.VK_UP, new UserEvent("jump") {
             @Override
             public void handle() {
                 player.jump();
@@ -78,12 +93,6 @@ public class Game extends GameModel {
             public void handle() {
                 player.moveX(1);
             }
-        });
-    }
-
-    @Override
-    public void onUpdate() {
-        // TODO Auto-generated method stub
-
+        });*/
     }
 }

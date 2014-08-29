@@ -2,6 +2,8 @@ package com.almasb.jelly;
 
 import com.almasb.common.graphics.Color;
 import com.almasb.common.graphics.GraphicsContext;
+import com.almasb.common.graphics.Point2D;
+import com.almasb.java.game.Camera2D;
 import com.almasb.java.game.GameObject;
 
 /**
@@ -92,27 +94,33 @@ public class JellyGameObject extends GameObject {
 
     @Override
     protected void onDraw(GraphicsContext gContext) {
+        int tmpX = getX() - Camera2D.getInstance().getX();
+        int tmpY = getY() - Camera2D.getInstance().getY();
+
+        //if (!Camera2D.getInstance().getArea().contains(new Point2D(tmpX, tmpY))) return;
+
+
         switch (type) {
             case COIN:
-                gContext.drawImage(R.drawable.coin, getX(), getY());
+                gContext.drawImage(R.drawable.coin, tmpX, tmpY);
                 //break;
                 return;
             case ENEMY:
-                gContext.drawImage(R.drawable.enemy, getX(), getY());
+                gContext.drawImage(R.drawable.enemy, tmpX, tmpY);
                 //break;
                 return;
             case PLATFORM:
-                gContext.drawImage(R.drawable.platformup, getX(), getY());
+                gContext.drawImage(R.drawable.platformup, tmpX, tmpY);
                 return;
                 //break;
             case PLAYER:
-                gContext.drawImage(R.drawable.player, getX(), getY());
+                gContext.drawImage(R.drawable.player, tmpX, tmpY);
                 return;
                 //break;
             case PORTAL:
                 break;
             case POWERUP:
-                gContext.drawImage(R.drawable.powerup, getX(), getY());
+                gContext.drawImage(R.drawable.powerup, tmpX, tmpY);
                 return;
                 //break;
             default:
@@ -120,6 +128,6 @@ public class JellyGameObject extends GameObject {
         }
 
         gContext.setColor(Color.RED);
-        gContext.drawRect(getX(), getY(), getWidth(), getHeight());
+        gContext.drawRect(tmpX, tmpY, getWidth(), getHeight());
     }
 }
