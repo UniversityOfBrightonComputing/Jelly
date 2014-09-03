@@ -11,3 +11,6 @@
 .settings/
 /bin
 /target
+
+# maven #
+dependency-reduced-pom.xml
