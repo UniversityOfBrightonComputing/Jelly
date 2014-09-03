@@ -9,20 +9,13 @@ Compile & Run
 
 Required:
 - JDK 1.8+
-- almasb-lib.jar 1.1+ (can be found in lib/)
+- almasb-lib.jar 1.1.2 (can be found in lib/)
 
 Commands:
 
+(in project root)
+
 ```bash
 $ mvn package
-```
-
-WINDOWS:
-```bash
-$ java -cp "lib/*;target/*" com.almasb.jelly.v2.Main
-```
-
-MAC OS/LINUX:
-```bash
-$ java -cp "lib/*:target/*" com.almasb.jelly.v2.Main
+$ mvn exec:java
 ```
