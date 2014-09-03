@@ -17,6 +17,8 @@ public final class Const {
 
     public static final int CELL_SIZE = 64;
 
+    public static final int LIVES = 3;
+
     public static final int SCORE_COIN = 100;
     public static final int SCORE_POWERUP = SCORE_COIN * 10;
 }

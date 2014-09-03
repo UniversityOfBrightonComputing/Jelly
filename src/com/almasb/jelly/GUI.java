@@ -1,14 +1,21 @@
 package com.almasb.jelly;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.Animation;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import com.almasb.java.game.GameObject;
 import com.almasb.java.game.Physics;
@@ -79,7 +86,7 @@ public class GUI extends FXGameWindow {
         root.getChildren().add(player);
 
         camera.translateXProperty().bind(player.translateXProperty().subtract(640));
-        camera.translateYProperty().bind(player.translateYProperty().subtract(player.translateYProperty()));
+        //camera.translateYProperty().bind(player.translateYProperty().subtract(player.translateYProperty()));
     }
 
     @Override
@@ -110,11 +117,67 @@ public class GUI extends FXGameWindow {
 
     @Override
     protected void initUI(SubScene ui, Group uiRoot) {
+        final HBox livesHBox = new HBox(15);
+        livesHBox.setTranslateX(50);
+        livesHBox.setTranslateY(50);
+        final ArrayList<Animation> livesAnimation = new ArrayList<Animation>();
+        for (int i = 0; i < player.livesProperty().get(); i++) {
+            ImageView img = new ImageView(R.getImage(R.drawable.lives));
+            livesHBox.getChildren().add(img);
+            TranslateTransition tt = new TranslateTransition(Duration.seconds(2), img);
+            tt.setToY(img.getTranslateY() - 30);
+            tt.setAutoReverse(true);
+            tt.setCycleCount(Animation.INDEFINITE);
+            tt.setDelay(Duration.seconds(0.33*i));
+            tt.play();
+            livesAnimation.add(tt);
+        }
+
+        player.livesProperty().addListener((obs, old, newValue) -> {
+            for (Animation a : livesAnimation)
+                a.stop();
+            livesAnimation.clear();
+            livesHBox.getChildren().clear();
+
+            for (int i = 0; i < newValue.intValue(); i++) {
+                ImageView img = new ImageView(R.getImage(R.drawable.lives));
+
+                if (i == newValue.intValue() - 1 && newValue.intValue() > old.intValue()) {
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2), img);
+                    tt.setFromX(score.getTranslateX());
+                    //tt.setFromY(score.getTranslateY());
+                    tt.setToX(img.getTranslateX());
+
+                    tt.play();
+                }
+
+
+                livesHBox.getChildren().add(img);
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(2), img);
+                tt.setToY(img.getTranslateY() - 30);
+                tt.setAutoReverse(true);
+                tt.setCycleCount(Animation.INDEFINITE);
+                tt.setDelay(Duration.seconds(0.33*i));
+                tt.play();
+                livesAnimation.add(tt);
+            }
+        });
+
         score.setTranslateX(1200);
         score.setTranslateY(50);
         score.textProperty().bind(player.scoreProperty().asString());
+        player.scoreProperty().addListener((obs, old, newValue) -> {
+            if (newValue.intValue() % 1000 == 0) {
+                ScaleTransition st = new ScaleTransition(Duration.seconds(1), score);
+                st.setToX(2);
+                st.setToY(3);
+                st.setAutoReverse(true);
+                st.setCycleCount(2);
+                st.play();
+            }
+        });
 
-        uiRoot.getChildren().add(score);
+        uiRoot.getChildren().addAll(livesHBox, score);
     }
 
     @Override
@@ -127,6 +190,10 @@ public class GUI extends FXGameWindow {
 
     @Override
     protected void onUpdate(long now) {
-
+        // manually trigger camera translate property to fire
+        if (camera.getTranslateY() == 0)
+            camera.setTranslateY(0.1);
+        else
+            camera.setTranslateY(0);
     }
 }

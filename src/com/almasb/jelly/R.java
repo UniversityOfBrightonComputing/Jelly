@@ -19,6 +19,7 @@ public class R {
         public static final int coin = 3;
         public static final int background = 4;
         public static final int player = 5;
+        public static final int lives = 6;
     }
 
     public static final class raw {
@@ -38,5 +39,6 @@ public class R {
         images[drawable.coin] = ResourceManager.loadFXImage("coin.png");
         images[drawable.background] = ResourceManager.loadFXImage("bg.png");
         images[drawable.player] = ResourceManager.loadFXImage("player.png");
+        images[drawable.lives] = ResourceManager.loadFXImage("lives.png");
     }
 }
