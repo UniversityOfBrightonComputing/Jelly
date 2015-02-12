@@ -44,6 +44,10 @@ public class GUI extends FXGameWindow {
     protected void createContent(Pane root) {
         super.createContent(root);
 
+        ImageView background = new ImageView(R.getImage(R.drawable.bg_back));
+        background.translateXProperty().bind(camera.translateXProperty());
+        root.getChildren().add(background);
+
         List<String> levelData = ResourceManager.loadText("levels/level1.txt");
         for (int i = 0; i < 3; i++) {
             String line = levelData.get(i);
@@ -86,7 +90,6 @@ public class GUI extends FXGameWindow {
         root.getChildren().add(player);
 
         camera.translateXProperty().bind(player.translateXProperty().subtract(640));
-        //camera.translateYProperty().bind(player.translateYProperty().subtract(player.translateYProperty()));
     }
 
     @Override
@@ -119,7 +122,7 @@ public class GUI extends FXGameWindow {
     protected void initUI(SubScene ui, Group uiRoot) {
         final HBox livesHBox = new HBox(15);
         livesHBox.setTranslateX(50);
-        livesHBox.setTranslateY(50);
+        livesHBox.setTranslateY(70);
         final ArrayList<Animation> livesAnimation = new ArrayList<Animation>();
         for (int i = 0; i < player.livesProperty().get(); i++) {
             ImageView img = new ImageView(R.getImage(R.drawable.lives));
@@ -145,7 +148,6 @@ public class GUI extends FXGameWindow {
                 if (i == newValue.intValue() - 1 && newValue.intValue() > old.intValue()) {
                     TranslateTransition tt = new TranslateTransition(Duration.seconds(2), img);
                     tt.setFromX(score.getTranslateX());
-                    //tt.setFromY(score.getTranslateY());
                     tt.setToX(img.getTranslateX());
 
                     tt.play();
@@ -164,7 +166,7 @@ public class GUI extends FXGameWindow {
         });
 
         score.setTranslateX(1200);
-        score.setTranslateY(50);
+        score.setTranslateY(70);
         score.textProperty().bind(player.scoreProperty().asString());
         player.scoreProperty().addListener((obs, old, newValue) -> {
             if (newValue.intValue() % 1000 == 0) {
@@ -177,13 +179,21 @@ public class GUI extends FXGameWindow {
             }
         });
 
-        uiRoot.getChildren().addAll(livesHBox, score);
+        ImageView clouds = new ImageView(R.getImage(R.drawable.bg_clouds));
+        clouds.setTranslateX(W);
+        TranslateTransition cloudsAnimation = new TranslateTransition(Duration.seconds(20), clouds);
+        cloudsAnimation.setToX(-W);
+        cloudsAnimation.setCycleCount(Animation.INDEFINITE);
+        cloudsAnimation.play();
+
+        uiRoot.getChildren().addAll(livesHBox, score, clouds);
     }
 
     @Override
     protected void initStage(Stage primaryStage) {
         super.initStage(primaryStage);
-
+        primaryStage.setWidth(W);
+        primaryStage.setHeight(H);
         primaryStage.show();
         mainTimer.start();
     }
@@ -191,9 +201,9 @@ public class GUI extends FXGameWindow {
     @Override
     protected void onUpdate(long now) {
         // manually trigger camera translate property to fire
-        if (camera.getTranslateY() == 0)
-            camera.setTranslateY(0.1);
+        if (camera.getTranslateY() == 30)
+            camera.setTranslateY(30.1);
         else
-            camera.setTranslateY(0);
+            camera.setTranslateY(30);
     }
 }

@@ -1,6 +1,8 @@
 package com.almasb.jelly;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -53,6 +55,18 @@ public class JellyGameObject extends GameObject {
             case PLATFORM:
                 sprite.setImage(R.getImage(R.drawable.platformup));
                 setMovable(false);
+
+                /*KeyValue k = new KeyValue(sprite.imageProperty(), R.getImage(R.drawable.platformdown));
+                KeyValue k2 = new KeyValue(sprite.imageProperty(), R.getImage(R.drawable.platformup));
+
+                KeyFrame kf = new KeyFrame(Duration.seconds(2), k);
+                KeyFrame kf2 = new KeyFrame(Duration.seconds(4), k2);
+
+                Timeline timeline = new Timeline();
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.getKeyFrames().addAll(kf, kf2);
+                timeline.play();*/
+
                 break;
             case PORTAL:
             case COIN:
